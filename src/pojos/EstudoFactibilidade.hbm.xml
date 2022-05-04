@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.EstudoFactibilidade" table="estudo_factibilidade" catalog="servicomultiples" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="nomeProjeto" type="string">
+            <column name="nome_projeto" not-null="true" />
+        </property>
+        <property name="descricao" type="string">
+            <column name="descricao" length="65535" not-null="true" />
+        </property>
+        <property name="enfoque" type="string">
+            <column name="enfoque" length="65535" />
+        </property>
+        <property name="resultadoEsperado" type="string">
+            <column name="resultado_esperado" length="65535" not-null="true" />
+        </property>
+        <property name="costo" type="double">
+            <column name="costo" precision="10" not-null="true" />
+        </property>
+        <set name="servicos" table="servico" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudo_factibilidade" />
+            </key>
+            <one-to-many class="pojos.Servico" />
+        </set>
+    </class>
+</hibernate-mapping>

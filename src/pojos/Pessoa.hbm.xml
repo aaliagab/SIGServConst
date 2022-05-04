@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.Pessoa" table="pessoa" catalog="servicomultiples" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="endereco" class="pojos.Endereco" fetch="select">
+            <column name="id_endereco" not-null="true" />
+        </many-to-one>
+        <many-to-one name="genero" class="pojos.Genero" fetch="select">
+            <column name="id_genero" not-null="true" />
+        </many-to-one>
+        <property name="nome" type="string">
+            <column name="nome" length="60" not-null="true" />
+        </property>
+        <property name="sobrenome" type="string">
+            <column name="sobrenome" length="60" not-null="true" />
+        </property>
+        <property name="dataIngreso" type="date">
+            <column name="data_ingreso" length="10" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="120" />
+        </property>
+        <property name="telefone" type="string">
+            <column name="telefone" length="60" not-null="true" />
+        </property>
+        <one-to-one name="cliente" class="pojos.Cliente"></one-to-one>
+        <one-to-one name="funcionario" class="pojos.Funcionario"></one-to-one>
+    </class>
+</hibernate-mapping>

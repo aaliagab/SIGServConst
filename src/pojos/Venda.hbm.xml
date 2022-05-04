@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.Venda" table="venda" catalog="servicomultiples" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="funcionario" class="pojos.Funcionario" fetch="select">
+            <column name="id_funcionario" not-null="true" />
+        </many-to-one>
+        <many-to-one name="metodoPagamento" class="pojos.MetodoPagamento" fetch="select">
+            <column name="id_metodo_pagamento" not-null="true" />
+        </many-to-one>
+        <many-to-one name="solicitude" class="pojos.Solicitude" fetch="select">
+            <column name="id_solicitude" not-null="true" />
+        </many-to-one>
+        <property name="total" type="java.lang.Float">
+            <column name="total" precision="12" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

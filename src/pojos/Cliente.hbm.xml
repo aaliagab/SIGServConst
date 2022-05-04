@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.Cliente" table="cliente" catalog="servicomultiples" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="foreign">
+                <param name="property">pessoa</param>
+            </generator>
+        </id>
+        <one-to-one name="pessoa" class="pojos.Pessoa" constrained="true"></one-to-one>
+        <property name="num" type="string">
+            <column name="num" length="50" not-null="true" />
+        </property>
+        <property name="empresa" type="boolean">
+            <column name="empresa" not-null="true" />
+        </property>
+        <property name="niif" type="string">
+            <column name="niif" length="60" />
+        </property>
+        <set name="solicitudes" table="solicitude" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" not-null="true" />
+            </key>
+            <one-to-many class="pojos.Solicitude" />
+        </set>
+    </class>
+</hibernate-mapping>
