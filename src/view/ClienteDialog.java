@@ -7,7 +7,7 @@ package view;
 
 import controller.Toast;
 import dao.BussinessException;
-import dao.FuncionarioDAOImplement;
+import dao.ClienteDAOImplement;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -18,19 +18,18 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import pojos.Bairro;
-import pojos.Cargo;
 import pojos.Endereco;
-import pojos.Funcionario;
-import pojos.Genero;
+import pojos.Cliente;
 import pojos.Municipio;
 import pojos.Pessoa;
 import pojos.Provincia;
+import pojos.Genero;
 
 /**
  *
  * @author
  */
-public class FuncionarioDialog extends javax.swing.JDialog {
+public class ClienteDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ClienteDialog
@@ -39,19 +38,18 @@ public class FuncionarioDialog extends javax.swing.JDialog {
             busca2 = "Busca por nome";
     Main pai;
     Toast msg;
-    List<Funcionario> list_atual;
+    List<Cliente> list_atual;
     List<Municipio> muns;
     List<Bairro> bairros;
-    List<Cargo> cargos;
     List<Genero> generos;
     List<Provincia> provincias;
-    FuncionarioDAOImplement daoObject;
+    ClienteDAOImplement daoObject;
 
-    public FuncionarioDialog(java.awt.Frame parent, boolean modal) {
+    public ClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         pai = (Main) parent;
-        daoObject = pai.control.getFuncionarioDAO();
+        daoObject = pai.control.getClienteDAO();
         this.setLocationRelativeTo(null);
         //Atualizar tabela
         updateJTable();
@@ -59,10 +57,21 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         data.setDate(new Date());
         preecherCombo();
 
-        String toolTip = "Funcionario";
+        String toolTip = "Cliente";
         jButton2.setToolTipText("Inserir " + toolTip);
         jButton4.setToolTipText("Apagar seleção de " + toolTip);
         botao_actualizar1.setToolTipText("Atualizar " + toolTip);
+    }
+    
+    public String generateNum(int id) {
+        String num = "Serv-CL";
+        String idcad = id + "";
+        int cant_cero = 8 - idcad.length();
+        while (cant_cero-- > 0) {
+            num += "0";
+        }
+        num += id;
+        return num;
     }
 
     public void inicializarForm() {
@@ -79,12 +88,8 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         try {
             muns = new ArrayList<>();
             provincias = pai.control.getProvinciaDAO().findAll();
-            cargos = pai.control.getCargoDAO().findAll();
             generos = pai.control.getGeneroDAO().findAll();
             bairros = new ArrayList<>();
-            for (Cargo obj : cargos) {
-                comboCargo.addItem(obj.getNome());
-            }
             for (Genero obj : generos) {
                 comboGenero.addItem(obj.getNome());
             }
@@ -111,14 +116,14 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         }
     }
 
-    public void addRowTableModel(DefaultTableModel model, Funcionario obj) {
+    public void addRowTableModel(DefaultTableModel model, Cliente obj) {
         model.addRow(new Object[]{
             obj.getPessoa().getNome()+" "+obj.getPessoa().getSobrenome(),
-            obj.getPessoa().getEndereco().getBairro().getMunicipio().getProvincia().getNome(),
+            obj.getNum(),
             obj.getPessoa().getEndereco().getBairro().getMunicipio().getNome(),
             obj.getPessoa().getEndereco().getBairro().getNome(),
             obj.getPessoa().getEndereco().getRua(),
-            obj.getPessoa().getGenero().getNome(),
+            obj.isEmpresa()?"SIM":"NÃO",
             obj.getPessoa().getTelefone(),
             obj.getPessoa().getEmail() == null ? "" : obj.getPessoa().getEmail()
         });
@@ -129,7 +134,7 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         model.setNumRows(0);
         try {
             list_atual = daoObject.findAll();
-            for (Funcionario obj : list_atual) {
+            for (Cliente obj : list_atual) {
                 addRowTableModel(model, obj);
             }
         } catch (BussinessException ex) {
@@ -137,17 +142,16 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         }
     }
 
-    public void updateJTableBusca(List<Funcionario> list) {
+    public void updateJTableBusca(List<Cliente> list) {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setNumRows(0);
-        for (Funcionario obj : list) {
+        for (Cliente obj : list) {
             addRowTableModel(model, obj);
         }
     }
 
-    public void editar(Funcionario obj) {
+    public void editar(Cliente obj) {
         if (!nome.getText().equals("")
-                && !sobrenome.getText().equals("")
                 && !telefone.getText().equals("(+   )   -   -   ")
                 && data.getDate()!=null
                 && !email.getText().equals("")
@@ -175,8 +179,9 @@ public class FuncionarioDialog extends javax.swing.JDialog {
                     obj.getPessoa().setDataIngreso(data.getDate());
                     pai.control.getPessoaDAO().update(obj.getPessoa());
                     
-                    //dados func
-                    obj.setCargo(cargos.get(comboCargo.getSelectedIndex()));
+                    obj.setNiif(niif.getText());                    
+                    obj.setEmpresa(empresa.isSelected());
+                    
                     daoObject.update(obj);
                     
                     updateJTable();
@@ -244,13 +249,14 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         jLabel15 = new javax.swing.JLabel();
         numero = new javax.swing.JTextField();
         data = new com.toedter.calendar.JDateChooser();
-        jLabel13 = new javax.swing.JLabel();
-        comboCargo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         sobrenome = new javax.swing.JTextField();
+        empresa = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        niif = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GERENCIAR FUNCIONÁRIOS");
+        setTitle("GERENCIAR CLIENTES");
 
         tabela.setAutoCreateRowSorter(true);
         tabela.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -259,7 +265,7 @@ public class FuncionarioDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nome", "Província", "Município", "Bairro", "Rua", "Gênero", "Telefone", "Email"
+                "Nome", "Número", "Município", "Bairro", "Rua", "Empresa?", "Telefone", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -336,7 +342,7 @@ public class FuncionarioDialog extends javax.swing.JDialog {
 
         jLabel11.setText("Gênero:");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("RESIDÊNCIA"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("ENDEREÇO"));
         jPanel2.setToolTipText("");
 
         jLabel3.setText("Província:");
@@ -412,11 +418,23 @@ public class FuncionarioDialog extends javax.swing.JDialog {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jLabel13.setText("Cargo:");
-
-        jLabel5.setText("Sobrenome:");
+        jLabel5.setText("Sobrenome");
 
         sobrenome.setName("nome"); // NOI18N
+
+        empresa.setText("Empresa?");
+        empresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                empresaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                empresaMouseReleased(evt);
+            }
+        });
+
+        jLabel6.setText("NIIF:");
+
+        niif.setName("nome"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -440,29 +458,33 @@ public class FuncionarioDialog extends javax.swing.JDialog {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel13))
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(comboCargo, 0, 164, Short.MAX_VALUE)
-                                    .addComponent(nome))
-                                .addGap(40, 40, 40)
+                                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(sobrenome)
-                                    .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                                    .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(empresa)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(niif, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -472,34 +494,38 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 3, Short.MAX_VALUE)
                 .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel11)
-                        .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8)
-                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)
-                        .addComponent(sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel13)
-                        .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel11)
+                                .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8)
+                                .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9)))
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(niif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addComponent(empresa)))
+                .addGap(33, 33, 33)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botao_actualizar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -534,7 +560,7 @@ public class FuncionarioDialog extends javax.swing.JDialog {
             int[] rows = tabela.getSelectedRows();
             if (rows.length > 0) {
                 if (rows.length == 1) {
-                    Funcionario obj = list_atual.get(rows[0]);
+                    Cliente obj = list_atual.get(rows[0]);
                     editar(obj);
                 } else {
                     pai.control.messageUmaLinha();
@@ -546,17 +572,17 @@ public class FuncionarioDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_botao_actualizar1ActionPerformed
 
     private void busca_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busca_nomeKeyPressed
-        List<Funcionario> list = new ArrayList<>();
+        List<Cliente> list = new ArrayList<>();
         updateJTable();
         boolean flag = false;
-        for (Funcionario list1 : list_atual) {
+        for (Cliente list1 : list_atual) {
             if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                    && !list1.getPessoa().getNome().toUpperCase().contains(
+                    && !(list1.getPessoa().getNome()+" "+list1.getPessoa().getSobrenome()).toUpperCase().contains(
                             (busca_nome.getText().substring(0, busca_nome.getText().length() - 1)).toUpperCase()
                     )) {
                 flag = true;
             } else if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
-                    && !list1.getPessoa().getNome().toUpperCase().contains(
+                    && !(list1.getPessoa().getNome()+" "+list1.getPessoa().getSobrenome()).toUpperCase().contains(
                             (busca_nome.getText() + evt.getKeyChar()).toUpperCase()
                     )) {
                 flag = true;
@@ -602,7 +628,6 @@ public class FuncionarioDialog extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (nome.getText().equals("")
-                || sobrenome.getText().equals("")
                 || data.getDate()==null
                 || telefone.getText().equals("(+   )   -   -   ")
                 || email.getText().equals("")
@@ -625,19 +650,21 @@ public class FuncionarioDialog extends javax.swing.JDialog {
                     Pessoa obj = new Pessoa();
 
                     //dados pessoa
+                    obj.setEndereco(dir);
                     obj.setNome(nome.getText());
                     obj.setSobrenome(sobrenome.getText());
                     obj.setTelefone(telefone.getText());
                     obj.setEmail(email.getText());
                     obj.setGenero(generos.get(comboGenero.getSelectedIndex()));
                     obj.setDataIngreso(data.getDate());
-                    obj.setEndereco(dir);
                     pai.control.getPessoaDAO().save(obj);
 
-                    Funcionario fun = new Funcionario();
-                    fun.setPessoa(obj);
-                    fun.setCargo(cargos.get(comboCargo.getSelectedIndex()));
-                    daoObject.save(fun);
+                    Cliente cl = new Cliente();
+                    cl.setPessoa(obj);
+                    cl.setNum(generateNum(obj.getId()));
+                    cl.setNiif(niif.getText());
+                    cl.setEmpresa(empresa.isSelected());
+                    daoObject.save(cl);
                     updateJTable();
                     pai.control.messageOperacaoSucesso();
                     inicializarForm();
@@ -649,18 +676,17 @@ public class FuncionarioDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-        Funcionario obj = list_atual.get(tabela.getSelectedRow());
+        Cliente obj = list_atual.get(tabela.getSelectedRow());
         nome.setText(obj.getPessoa().getNome());
         sobrenome.setText(obj.getPessoa().getSobrenome());
         telefone.setText(obj.getPessoa().getTelefone());
         email.setText(obj.getPessoa().getEmail());
         rua.setText(obj.getPessoa().getEndereco().getRua());
         numero.setText(obj.getPessoa().getEndereco().getNumCasa());
-        comboGenero.setSelectedItem(obj.getPessoa().getGenero().getNome());
+        comboGenero.setSelectedItem(obj.getPessoa().getGenero());
         data.setDate(obj.getPessoa().getDataIngreso());
         comboProv.setSelectedItem(obj.getPessoa().getEndereco().getBairro().getMunicipio().getProvincia().getNome());
         comboMun.setSelectedItem(obj.getPessoa().getEndereco().getBairro().getMunicipio().getNome());
-        comboCargo.setSelectedItem(obj.getCargo().getNome());
         comboBairro.setSelectedItem(obj.getPessoa().getEndereco().getBairro().getNome());        
 
     }//GEN-LAST:event_tabelaMouseClicked
@@ -689,6 +715,14 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_comboMunMouseReleased
 
+    private void empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empresaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_empresaMouseClicked
+
+    private void empresaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empresaMouseReleased
+        
+    }//GEN-LAST:event_empresaMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -706,14 +740,70 @@ public class FuncionarioDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -727,7 +817,7 @@ public class FuncionarioDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FuncionarioDialog dialog = new FuncionarioDialog(new javax.swing.JFrame(), true);
+                ClienteDialog dialog = new ClienteDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -743,29 +833,30 @@ public class FuncionarioDialog extends javax.swing.JDialog {
     private javax.swing.JButton botao_actualizar1;
     private javax.swing.JTextField busca_nome;
     private javax.swing.JComboBox<String> comboBairro;
-    private javax.swing.JComboBox<String> comboCargo;
     private javax.swing.JComboBox<String> comboGenero;
     private javax.swing.JComboBox<String> comboMun;
     private javax.swing.JComboBox<String> comboProv;
     private com.toedter.calendar.JDateChooser data;
     private javax.swing.JTextField email;
+    private javax.swing.JCheckBox empresa;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField niif;
     private javax.swing.JTextField nome;
     private javax.swing.JTextField numero;
     private javax.swing.JTextField rua;

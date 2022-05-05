@@ -55,7 +55,7 @@ public class IvaDialog extends javax.swing.JDialog {
     
     public void addRowTableModel(DefaultTableModel model, Iva obj) {
         model.addRow(new Object[]{
-            obj.getPorcetagem()
+            obj.getPorcetagem()+" %"
         });
     }
 

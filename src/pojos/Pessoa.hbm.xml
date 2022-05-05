@@ -18,7 +18,7 @@
             <column name="nome" length="60" not-null="true" />
         </property>
         <property name="sobrenome" type="string">
-            <column name="sobrenome" length="60" not-null="true" />
+            <column name="sobrenome" length="60" />
         </property>
         <property name="dataIngreso" type="date">
             <column name="data_ingreso" length="10" not-null="true" />

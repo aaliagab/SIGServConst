@@ -7,7 +7,7 @@ package view;
 
 import controller.Toast;
 import dao.BussinessException;
-import dao.ProvinciaDAOImplement;
+import dao.TipoServicoDAOImplement;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import pojos.Provincia;
+import pojos.TipoServico;
 
 /**
  *
@@ -30,14 +30,14 @@ public class TipoServicoDialog extends javax.swing.JDialog {
             busca2 = "Busca por nome";
     Main pai;
     Toast msg;
-    List<Provincia> list_atual;
-    ProvinciaDAOImplement daoObject;
+    List<TipoServico> list_atual;
+    TipoServicoDAOImplement daoObject;
 
     public TipoServicoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         pai = (Main) parent;
-        daoObject = pai.control.getProvinciaDAO();
+        daoObject = pai.control.getTipoServicoDAO();
         this.setLocationRelativeTo(null);
         //Atualizar tabela
         updateJTable();
@@ -53,7 +53,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         nome.setText("");
     }
     
-    public void addRowTableModel(DefaultTableModel model, Provincia obj) {
+    public void addRowTableModel(DefaultTableModel model, TipoServico obj) {
         model.addRow(new Object[]{
             obj.getNome()
         });
@@ -63,9 +63,9 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setNumRows(0);
         try {
-            List<Provincia> list = daoObject.findAll();
+            List<TipoServico> list = daoObject.findAll();
             list_atual = list;
-            for (Provincia obj : list) {
+            for (TipoServico obj : list) {
                 addRowTableModel(model, obj);
             }
         } catch (BussinessException ex) {
@@ -73,15 +73,15 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         }
     }
 
-    public void updateJTableBusca(List<Provincia> list) {
+    public void updateJTableBusca(List<TipoServico> list) {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setNumRows(0);
-        for (Provincia obj : list) {
+        for (TipoServico obj : list) {
             addRowTableModel(model, obj);
         }
     }
 
-    public void editar(Provincia obj) {
+    public void editar(TipoServico obj) {
         if (!nome.getText().equals("")) {
             try {
                 obj.setNome(nome.getText());
@@ -267,7 +267,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         if (nome.getText().equals("")) {
             pai.control.messageFieldEmpty();
         } else {
-            Provincia obj = new Provincia(nome.getText());
+            TipoServico obj = new TipoServico(nome.getText());
             try {
                 daoObject.save(obj);
                 updateJTable();
@@ -312,10 +312,10 @@ public class TipoServicoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_busca_nomeFocusLost
 
     private void busca_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busca_nomeKeyPressed
-        List<Provincia> list = new ArrayList<>();
+        List<TipoServico> list = new ArrayList<>();
         updateJTable();
         boolean flag = false;
-        for (Provincia list1 : list_atual) {
+        for (TipoServico list1 : list_atual) {
             if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                     && !list1.getNome().toUpperCase().contains(
                             (busca_nome.getText().substring(0, busca_nome.getText().length() - 1)).toUpperCase()
@@ -335,7 +335,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_busca_nomeKeyPressed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-        Provincia obj = list_atual.get(tabela.getSelectedRow());
+        TipoServico obj = list_atual.get(tabela.getSelectedRow());
         nome.setText(obj.getNome());
     }//GEN-LAST:event_tabelaMouseClicked
 
@@ -346,7 +346,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
             int[] rows = tabela.getSelectedRows();
             if (rows.length > 0) {
                 if (rows.length == 1) {
-                    Provincia obj = list_atual.get(rows[0]);
+                    TipoServico obj = list_atual.get(rows[0]);
                     editar(obj);                    
                 } else {
                     pai.control.messageUmaLinha();

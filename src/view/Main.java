@@ -797,7 +797,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void menuItemFuncionario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFuncionario1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (control.getBairroDAO().findAll().size() == 0) {
+                msg = new Toast("Bairro deve ser inserido antes.", 2000);
+                msg.showToast();
+            } else if (control.getGeneroDAO().findAll().size() == 0) {
+                msg = new Toast("Género deve ser inserido antes.", 2000);
+                msg.showToast();
+            } else {
+                ClienteDialog obj = new ClienteDialog(this, true);
+                obj.setVisible(true);
+            }
+        } catch (BussinessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuItemFuncionario1ActionPerformed
 
     /**
@@ -827,7 +840,7 @@ public class Main extends javax.swing.JFrame {
         }
         //</editor-fold>
         try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
         } catch (Exception e) {
             Toast msg2 = new Toast(e.getMessage(), 2000);
             msg2.showToast();
