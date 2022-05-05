@@ -28,6 +28,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import pojos.Acesso;
+import pojos.EstadoSolicitude;
 import pojos.Usuario;
 
 /**
@@ -56,6 +57,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         inserirAcessos();
+        inserirEstados();
         inserirSuperUser();
         LoginDialog obj = new LoginDialog(this, true);
         obj.show();
@@ -123,6 +125,29 @@ public class Main extends javax.swing.JFrame {
             if (vendedor == null) {
                 vendedor = new Acesso("vendedor");
                 control.getAcessoDAO().save(vendedor);
+            }
+        } catch (BussinessException ex) {
+            msg = new Toast(ex.getMessage(), 2000);
+            msg.showToast();
+        }
+    }
+    
+    public void inserirEstados() {
+        try {
+            EstadoSolicitude novo = control.getEstadoSolicitudeDAO().getByNome("Novo");
+            EstadoSolicitude processo = control.getEstadoSolicitudeDAO().getByNome("Em processo");
+            EstadoSolicitude realizado = control.getEstadoSolicitudeDAO().getByNome("Realizado");
+            if (novo == null) {
+                novo = new EstadoSolicitude("Novo");
+                control.getEstadoSolicitudeDAO().save(novo);
+            }
+            if (processo == null) {
+                processo = new EstadoSolicitude("Em processo");
+                control.getEstadoSolicitudeDAO().save(processo);
+            }
+            if (realizado == null) {
+                realizado = new EstadoSolicitude("Realizado");
+                control.getEstadoSolicitudeDAO().save(realizado);
             }
         } catch (BussinessException ex) {
             msg = new Toast(ex.getMessage(), 2000);
@@ -698,8 +723,17 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-//        InstitucaoDialog obj = new InstitucaoDialog(this, true);
-//        obj.setVisible(true);
+        try {
+            if (control.getTipoServicoDAO().findAll().size() == 0) {
+                msg = new Toast("Tipo de serviço deve ser inserido antes", 2000);
+                msg.showToast();
+            } else {
+                ServicoDialog obj = new ServicoDialog(this, true);
+                obj.setVisible(true);
+            }
+        } catch (BussinessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
