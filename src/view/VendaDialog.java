@@ -1,0 +1,631 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package view;
+
+import controller.Toast;
+import dao.BussinessException;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import pojos.Cliente;
+import pojos.Funcionario;
+import pojos.Produto;
+import pojos.ProdutoVenda;
+import pojos.Venda;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import reports.ProdutoVendaFactura;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
+/**
+ *
+ * @author Adriel
+ */
+public class VendaDialog extends javax.swing.JDialog {
+
+    /**
+     * Creates new form VendaDialog
+     */
+    private final String busca1 = "Busca por código",
+            busca2 = "Busca por nome";
+    Main pai;
+    Toast msg;
+    List<Produto> list_atual;
+    double preco_total = 0;
+    Funcionario func;
+    List<ProdutoVenda> produtos_vendas;
+    List<Cliente> cls;
+    Produto pscanner = null;
+
+    public VendaDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        pai = (Main) parent;
+        this.setLocationRelativeTo(null);
+        emcherComboBox();
+        inicializarForm();
+        //Atualizar tabela
+        updateJTable();
+        AutoCompleteDecorator.decorate(cliente);
+        setFuncionario();
+        pdf.setEnabled(false);
+
+    }
+
+    public Funcionario getFuncionario() {
+        return func;
+    }
+
+    public void setFuncionario() {
+        func = pai.getUsuario_login().getFuncionario();
+        funcionario.setText("FUNCIONÁRIO: " + (func.getPessoa().getNome()+" "+func.getPessoa().getSobrenome()).toUpperCase());
+    }
+
+    public void inicializarForm() {
+        quantidade.setText("");
+        cliente.setSelectedItem("---");
+        produto.setText("   ");
+    }
+
+    public void emcherComboBox() {
+        try {
+            cls = pai.control.getClienteDAO().findAll();
+            cliente.addItem("---");
+            for (Cliente cl : cls) {
+                cliente.addItem(cl.getPessoa().getNome() + " - " + cl.getId());
+            }
+        } catch (BussinessException ex) {
+            pai.control.messageErroBussiness(ex);
+        }
+
+    }
+
+    public void updateJTable() {
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        while (model.getRowCount() != 0) {
+            model.removeRow(model.getRowCount() - 1);
+        }
+        try {
+            List<Produto> list = pai.control.getProdutoDAO().findAll();
+            list_atual = list;
+            for (Produto obj : list) {
+                model.addRow(new Object[]{
+                    obj.getNome(),
+                    obj.getQuantidade()+" (L)",
+                    obj.getValor()
+                });
+            }
+        } catch (BussinessException ex) {
+            pai.control.messageErroBussiness(ex);
+        }
+    }
+
+    public void updateJTableBusca(List<Produto> list) {
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+
+        while (model.getRowCount() != 0) {
+            model.removeRow(model.getRowCount() - 1);
+        }
+        if (list.size() == 1) {
+            pscanner = list.get(0);
+        }
+
+        for (Produto obj : list) {
+            model.addRow(new Object[]{
+                obj.getNome(),
+                obj.getQuantidade()+" (L)",
+                obj.getValor()
+            });
+        }
+    }
+    
+    public String generateNumFuncionario(int id) {
+        String num = "COMB-V";
+        String idcad = id + "";
+        int cant_cero = 8 - idcad.length();
+        while (cant_cero-- > 0) {
+            num += "0";
+        }
+        num += id;
+        return num;
+    }
+
+    public void focusGained(JTextField jtf, String field) {
+        if (jtf.getText().equals(field)) {
+            jtf.setText("");
+        }
+        jtf.setForeground(Color.BLACK);
+    }
+
+    public void focusLost(JTextField jtf, String field) {
+        if (jtf.getText().equals("")) {
+            jtf.setText(field);
+        }
+        if (jtf.getText().equals(field)) {
+            jtf.setForeground(new Color(153, 153, 153));
+        }
+    }
+
+    public boolean alfaNumerico(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        funcionario = new javax.swing.JLabel();
+        busca_nome = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabela = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        cliente = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        quantidade = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaVenda = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        produto = new javax.swing.JLabel();
+        pdf = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("GERENCIAR VENDAS");
+
+        funcionario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        funcionario.setText("Funcionario: ");
+
+        busca_nome.setForeground(new java.awt.Color(153, 153, 153));
+        busca_nome.setText("Busca por nome");
+        busca_nome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                busca_nomeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                busca_nomeFocusLost(evt);
+            }
+        });
+        busca_nome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                busca_nomeKeyPressed(evt);
+            }
+        });
+
+        tabela.setAutoCreateRowSorter(true);
+        tabela.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Quantidade", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabela.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabelaFocusLost(evt);
+            }
+        });
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabela);
+
+        jLabel7.setText("Cliente:");
+
+        cliente.setEditable(true);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Produto:");
+
+        jLabel6.setText("Quantidade:");
+
+        tabelaVenda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Produto", "Quantidade", "Valor Unitario", "Valor Total", "ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabelaVenda);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_Down_Button_28px.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_Slide_Up_28px.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel2.setText("Valor: ");
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_money_bag_28px.png"))); // NOI18N
+        jButton3.setText("Fazer Venda");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        produto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
+        pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_PDF_28px.png"))); // NOI18N
+        pdf.setText("Facturar");
+        pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pdf)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(funcionario)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(produto)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(93, 93, 93)))
+                        .addGap(0, 184, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(346, 346, 346)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(funcionario)
+                        .addGap(15, 15, 15)
+                        .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(produto)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton4))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(pdf))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void busca_nomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_busca_nomeFocusGained
+        focusGained(busca_nome, busca2);
+    }//GEN-LAST:event_busca_nomeFocusGained
+
+    private void busca_nomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_busca_nomeFocusLost
+        focusLost(busca_nome, busca2);
+    }//GEN-LAST:event_busca_nomeFocusLost
+
+    private void busca_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busca_nomeKeyPressed
+        List<Produto> list = new ArrayList<>();
+        boolean flag = false;
+        for (Produto list1 : list_atual) {
+            if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                    && !list1.getNome().contains(busca_nome.getText().substring(0, busca_nome.getText().length() - 1))) {
+                flag = true;
+            } else if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                    && !list1.getNome().contains(busca_nome.getText() + evt.getKeyChar())) {
+                flag = true;
+            } else {
+                list.add(list1);
+            }
+        }
+        updateJTableBusca(list);
+    }//GEN-LAST:event_busca_nomeKeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tabelaVenda.getModel();
+        int[] rows = tabela.getSelectedRows();
+        Produto p = null;
+        if (pscanner == null) {
+            p = list_atual.get(rows[0]);
+        }else{
+            p = pscanner;            
+        }
+        if (Integer.parseInt(quantidade.getText()) > p.getQuantidade()) {
+            msg = new Toast("A quantidade solicitada não está disponível", 2000);
+            msg.showToast();
+        } else {
+            preco_total += Integer.parseInt(quantidade.getText()) * p.getValor();
+            jLabel2.setText("Valor: " + preco_total);
+            model.addRow(new Object[]{
+                produto.getText(),
+                quantidade.getText(),
+                p.getValor(),
+                Integer.parseInt(quantidade.getText()) * p.getValor(),
+                p.getId()
+            });
+        }
+        pscanner = null;
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            int[] filas = tabelaVenda.getSelectedRows();
+            DefaultTableModel model = (DefaultTableModel) tabelaVenda.getModel();
+            if (filas.length != 0) {
+                for (int indice : filas) {
+                    Produto p = pai.control.getProdutoDAO().get(
+                            Integer.parseInt(model.getValueAt(indice, 4).toString())
+                    );
+
+                    preco_total -= Integer.parseInt(model.getValueAt(indice, 1).toString()) * p.getValor();
+                    jLabel2.setText("Valor: " + preco_total);
+                    model.removeRow(indice);
+                }
+            } else {
+                pai.control.messageLinhasExcluir();
+            }
+
+        } catch (BussinessException ex) {
+            pai.control.messageErroBussiness(ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            DefaultTableModel model = (DefaultTableModel) tabelaVenda.getModel();
+            Venda v = new Venda(func, new Date(),preco_total);
+            produtos_vendas = new ArrayList<>();
+            if (!cliente.getSelectedItem().toString().equals("---")) {
+                v.setCliente(pai.control.getClienteDAO().get(Integer.parseInt(
+                        cliente.getSelectedItem().toString().split(" - ")[1])));
+            }
+            pai.control.getVendaDAO().save(v);
+            v.setFactura(generateNumFuncionario(v.getId()));
+            pai.control.getVendaDAO().update(v);
+            for (int indice = model.getRowCount() - 1; indice >= 0; indice--) {
+                Produto p = pai.control.getProdutoDAO().get(
+                        Integer.parseInt(model.getValueAt(indice, 4).toString())
+                );
+                p.setQuantidade(p.getQuantidade() - Integer.parseInt(model.getValueAt(indice, 1).toString()));
+                pai.control.getProdutoDAO().update(p);
+                ProdutoVenda pv = new ProdutoVenda(p, v,
+                        Integer.parseInt(model.getValueAt(indice, 1).toString()));
+                pai.control.getProdutoVendaDAO().save(pv);
+                produtos_vendas.add(pv);
+                model.removeRow(indice);
+            }
+
+            msg = new Toast("Venda realizada com successo", 2000);
+            msg.showToast();
+            if (produtos_vendas.size() > 0) {
+                pdf.setEnabled(true);
+            } else {
+                pdf.setEnabled(false);
+            }
+            updateJTable();
+            jLabel2.setText("Valor: ");
+            preco_total = 0;
+
+        } catch (BussinessException ex) {
+            pai.control.messageErroBussiness(ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaFocusLost
+
+    }//GEN-LAST:event_tabelaFocusLost
+
+    private void tabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMousePressed
+
+    }//GEN-LAST:event_tabelaMousePressed
+
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        int[] rows = tabela.getSelectedRows();
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        if (rows.length != 0) {
+            if (rows.length > 1) {
+                pai.control.messageUmaLinha();
+            } else {
+                Produto p = list_atual.get(rows[0]);
+                produto.setText(p.getNome());
+            }
+        }
+    }//GEN-LAST:event_tabelaMouseClicked
+
+    private void pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfActionPerformed
+        List<ProdutoVendaFactura> objs = new ArrayList<>();
+        double total = 0;
+        for (ProdutoVenda produtos_venda : produtos_vendas) {
+            objs.add(new ProdutoVendaFactura(produtos_venda));
+            total += produtos_venda.getQuantidadeItens() * produtos_venda.getProduto().getValor();
+        }
+        try {
+            JasperReport reporte = null;
+            URL path = this.getClass().getResource("/reports/factura_report.jasper");
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("logo", this.getClass().getResource("/resource/logo.png").toString());
+            parametros.put("total", total);
+            parametros.put("numero", produtos_vendas.get(0).getVenda().getFactura());
+            parametros.put("funcionario", pai.getUsuario_login().getFuncionario().getPessoa().getNome().toUpperCase());
+            parametros.put("cliente", "CLIENTE: " + (cliente.getSelectedIndex() > 0 ? cls.get(cliente.getSelectedIndex() - 1).getPessoa().getNome().toUpperCase() : ""));
+            reporte = (JasperReport) JRLoader.loadObject(path);
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+            JasperViewer jviewer = new JasperViewer(jprint, false);
+            jviewer.setVisible(true);
+            jviewer.setTitle("factura_report");
+
+        } catch (Exception e) {
+            msg = new Toast(e.getMessage(), 2000);
+            msg.showToast();
+        }
+    }//GEN-LAST:event_pdfActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void pai(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VendaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VendaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VendaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VendaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                VendaDialog dialog = new VendaDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField busca_nome;
+    private javax.swing.JComboBox<String> cliente;
+    public static javax.swing.JLabel funcionario;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton pdf;
+    private javax.swing.JLabel produto;
+    private javax.swing.JTextField quantidade;
+    private javax.swing.JTable tabela;
+    private javax.swing.JTable tabelaVenda;
+    // End of variables declaration//GEN-END:variables
+}
