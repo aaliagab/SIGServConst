@@ -56,7 +56,7 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="menuDepartamento">
+            <Menu class="javax.swing.JMenu" name="menuPessoas">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/resource/icons8_people_28px.png"/>
@@ -167,7 +167,7 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="menuEmigracao">
+            <Menu class="javax.swing.JMenu" name="menuServicos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/resource/icons8_service_28px.png"/>

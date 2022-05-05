@@ -134,8 +134,8 @@ public class Main extends javax.swing.JFrame {
         //operacoes
         menuSeguranca.setVisible(false);
             
-        menuEmigracao.setVisible(true);
-        menuDepartamento.setVisible(true);
+        menuServicos.setVisible(true);
+        menuPessoas.setVisible(true);
         //relatorios
         menuImpressoes.setVisible(true);
     }
@@ -143,8 +143,8 @@ public class Main extends javax.swing.JFrame {
     public void menuChefeSessao() {
         menuSeguranca.setVisible(false);
             
-        menuEmigracao.setVisible(true);
-        menuDepartamento.setVisible(false);
+        menuServicos.setVisible(true);
+        menuPessoas.setVisible(false);
         //relatorios
         menuImpressoes.setVisible(true);
     }
@@ -152,10 +152,10 @@ public class Main extends javax.swing.JFrame {
     public void menuAdmin() {
         menuSeguranca.setVisible(true);
             
-        menuEmigracao.setVisible(false);
-        menuDepartamento.setVisible(false);
+        menuServicos.setVisible(true);
+        menuPessoas.setVisible(true);
         //relatorios
-        menuImpressoes.setVisible(false);
+        menuImpressoes.setVisible(true);
     }
 
     public void showMenuAcesso() {
@@ -184,7 +184,7 @@ public class Main extends javax.swing.JFrame {
         menuSeguranca = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        menuDepartamento = new javax.swing.JMenu();
+        menuPessoas = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         menuItemGenero = new javax.swing.JMenuItem();
         menuItemProvincia = new javax.swing.JMenuItem();
@@ -192,7 +192,7 @@ public class Main extends javax.swing.JFrame {
         menuItemBairros = new javax.swing.JMenuItem();
         menuItemFuncionario = new javax.swing.JMenuItem();
         menuItemFuncionario1 = new javax.swing.JMenuItem();
-        menuEmigracao = new javax.swing.JMenu();
+        menuServicos = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         menuItemNatureza = new javax.swing.JMenuItem();
@@ -246,9 +246,9 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.add(menuSeguranca);
 
-        menuDepartamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_people_28px.png"))); // NOI18N
-        menuDepartamento.setText("Pessoas");
-        menuDepartamento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        menuPessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_people_28px.png"))); // NOI18N
+        menuPessoas.setText("Pessoas");
+        menuPessoas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_male_and_female_28px_1.png"))); // NOI18N
@@ -258,7 +258,7 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem14ActionPerformed(evt);
             }
         });
-        menuDepartamento.add(jMenuItem14);
+        menuPessoas.add(jMenuItem14);
 
         menuItemGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_identification_documents_28px.png"))); // NOI18N
@@ -268,7 +268,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemGeneroActionPerformed(evt);
             }
         });
-        menuDepartamento.add(menuItemGenero);
+        menuPessoas.add(menuItemGenero);
 
         menuItemProvincia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemProvincia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_australia_map_28px.png"))); // NOI18N
@@ -278,7 +278,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemProvinciaActionPerformed(evt);
             }
         });
-        menuDepartamento.add(menuItemProvincia);
+        menuPessoas.add(menuItemProvincia);
 
         menuItemMunicipio.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemMunicipio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_libya_map_28px.png"))); // NOI18N
@@ -288,7 +288,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemMunicipioActionPerformed(evt);
             }
         });
-        menuDepartamento.add(menuItemMunicipio);
+        menuPessoas.add(menuItemMunicipio);
 
         menuItemBairros.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemBairros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_maps_28px.png"))); // NOI18N
@@ -298,7 +298,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemBairrosActionPerformed(evt);
             }
         });
-        menuDepartamento.add(menuItemBairros);
+        menuPessoas.add(menuItemBairros);
 
         menuItemFuncionario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_private_account_male_28px.png"))); // NOI18N
@@ -308,7 +308,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemFuncionarioActionPerformed(evt);
             }
         });
-        menuDepartamento.add(menuItemFuncionario);
+        menuPessoas.add(menuItemFuncionario);
 
         menuItemFuncionario1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemFuncionario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_human_head_28px.png"))); // NOI18N
@@ -318,13 +318,13 @@ public class Main extends javax.swing.JFrame {
                 menuItemFuncionario1ActionPerformed(evt);
             }
         });
-        menuDepartamento.add(menuItemFuncionario1);
+        menuPessoas.add(menuItemFuncionario1);
 
-        jMenu1.add(menuDepartamento);
+        jMenu1.add(menuPessoas);
 
-        menuEmigracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
-        menuEmigracao.setText("Serviços");
-        menuEmigracao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        menuServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
+        menuServicos.setText("Serviços");
+        menuServicos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_type_28px.png"))); // NOI18N
@@ -334,7 +334,7 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        menuEmigracao.add(jMenuItem3);
+        menuServicos.add(jMenuItem3);
 
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_percentage_28px.png"))); // NOI18N
@@ -344,7 +344,7 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem12ActionPerformed(evt);
             }
         });
-        menuEmigracao.add(jMenuItem12);
+        menuServicos.add(jMenuItem12);
 
         menuItemNatureza.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemNatureza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_check_book_28px_1.png"))); // NOI18N
@@ -354,7 +354,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemNaturezaActionPerformed(evt);
             }
         });
-        menuEmigracao.add(menuItemNatureza);
+        menuServicos.add(menuItemNatureza);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
@@ -364,7 +364,7 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        menuEmigracao.add(jMenuItem5);
+        menuServicos.add(jMenuItem5);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
@@ -374,7 +374,7 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        menuEmigracao.add(jMenuItem4);
+        menuServicos.add(jMenuItem4);
 
         menuItemHorarioManha.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemHorarioManha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_money_bag_28px.png"))); // NOI18N
@@ -384,9 +384,9 @@ public class Main extends javax.swing.JFrame {
                 menuItemHorarioManhaActionPerformed(evt);
             }
         });
-        menuEmigracao.add(menuItemHorarioManha);
+        menuServicos.add(menuItemHorarioManha);
 
-        jMenu1.add(menuEmigracao);
+        jMenu1.add(menuServicos);
         jMenu1.add(jSeparator1);
 
         jMenuItem28.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
@@ -861,8 +861,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenu menuDepartamento;
-    private javax.swing.JMenu menuEmigracao;
     private javax.swing.JMenu menuImpressoes;
     private javax.swing.JMenuItem menuItemBairros;
     private javax.swing.JMenuItem menuItemFuncionario;
@@ -872,6 +870,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemMunicipio;
     private javax.swing.JMenuItem menuItemNatureza;
     private javax.swing.JMenuItem menuItemProvincia;
+    private javax.swing.JMenu menuPessoas;
     private javax.swing.JMenu menuSeguranca;
+    private javax.swing.JMenu menuServicos;
     // End of variables declaration//GEN-END:variables
 }
