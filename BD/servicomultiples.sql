@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2022 a las 23:30:41
+-- Tiempo de generación: 05-05-2022 a las 07:59:47
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -33,6 +33,15 @@ CREATE TABLE `acesso` (
   `nome` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `acesso`
+--
+
+INSERT INTO `acesso` (`id`, `nome`) VALUES
+(1, 'admin'),
+(2, 'gerente'),
+(3, 'vendedor');
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +54,13 @@ CREATE TABLE `bairro` (
   `id_municipio` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `bairro`
+--
+
+INSERT INTO `bairro` (`id`, `nome`, `id_municipio`) VALUES
+(1, 'Cantinflas', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +71,13 @@ CREATE TABLE `cargo` (
   `id` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`id`, `nome`) VALUES
+(1, 'Chefe de venda');
 
 -- --------------------------------------------------------
 
@@ -82,6 +105,13 @@ CREATE TABLE `endereco` (
   `num_casa` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `endereco`
+--
+
+INSERT INTO `endereco` (`id`, `id_bairro`, `rua`, `num_casa`) VALUES
+(2, 1, 'Fang', '12');
+
 -- --------------------------------------------------------
 
 --
@@ -96,6 +126,21 @@ CREATE TABLE `estado_solicitude` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `estudo_factibilidade`
+--
+
+CREATE TABLE `estudo_factibilidade` (
+  `id` int(11) NOT NULL,
+  `nome_projeto` varchar(255) NOT NULL,
+  `descricao` text NOT NULL,
+  `enfoque` text DEFAULT NULL,
+  `resultado_esperado` text NOT NULL,
+  `costo` double(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `funcionario`
 --
 
@@ -103,6 +148,13 @@ CREATE TABLE `funcionario` (
   `id` int(11) NOT NULL,
   `id_cargo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `funcionario`
+--
+
+INSERT INTO `funcionario` (`id`, `id_cargo`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -114,6 +166,14 @@ CREATE TABLE `genero` (
   `id` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `genero`
+--
+
+INSERT INTO `genero` (`id`, `nome`) VALUES
+(1, 'Masculino'),
+(2, 'Feminino');
 
 -- --------------------------------------------------------
 
@@ -149,6 +209,13 @@ CREATE TABLE `municipio` (
   `id_provincia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
+--
+-- Volcado de datos para la tabla `municipio`
+--
+
+INSERT INTO `municipio` (`id`, `nome`, `id_provincia`) VALUES
+(1, 'Cuito', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -166,6 +233,13 @@ CREATE TABLE `pessoa` (
   `id_endereco` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `pessoa`
+--
+
+INSERT INTO `pessoa` (`id`, `nome`, `sobrenome`, `id_genero`, `data_ingreso`, `email`, `telefone`, `id_endereco`) VALUES
+(1, 'Artur', 'Ochaenda', 1, '2022-05-05', 'a@a.aa', '(+244)927-834-842', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +250,14 @@ CREATE TABLE `provincia` (
   `id` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `provincia`
+--
+
+INSERT INTO `provincia` (`id`, `nome`) VALUES
+(1, 'Luanda'),
+(2, 'Bié');
 
 -- --------------------------------------------------------
 
@@ -190,7 +272,8 @@ CREATE TABLE `servico` (
   `id_tipo` int(11) NOT NULL,
   `valor` double(10,2) NOT NULL,
   `id_iva` int(11) DEFAULT NULL,
-  `descricao` varchar(255) NOT NULL
+  `descricao` varchar(255) NOT NULL,
+  `id_estudo_factibilidade` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -244,6 +327,13 @@ CREATE TABLE `usuario` (
   `id_acesso` int(11) NOT NULL,
   `id_funcionario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nome`, `senha`, `id_acesso`, `id_funcionario`) VALUES
+(1, 'admin', '2c978d261a17e63ffc5b87f58b2e237fbe88a94ef1113cd76caa9453d4123c7310cde5fb2048dd5c88ca36cb18c520060b7b58027dd8177499860b32d7f54705', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -302,6 +392,12 @@ ALTER TABLE `estado_solicitude`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `estudo_factibilidade`
+--
+ALTER TABLE `estudo_factibilidade`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `funcionario`
 --
 ALTER TABLE `funcionario`
@@ -352,6 +448,7 @@ ALTER TABLE `provincia`
 --
 ALTER TABLE `servico`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_estudo_factibilidade` (`id_estudo_factibilidade`),
   ADD KEY `id_iva` (`id_iva`),
   ADD KEY `id_tipo` (`id_tipo`);
 
@@ -402,25 +499,25 @@ ALTER TABLE `venda`
 -- AUTO_INCREMENT de la tabla `acesso`
 --
 ALTER TABLE `acesso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `bairro`
 --
 ALTER TABLE `bairro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `endereco`
 --
 ALTER TABLE `endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_solicitude`
@@ -429,10 +526,16 @@ ALTER TABLE `estado_solicitude`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `estudo_factibilidade`
+--
+ALTER TABLE `estudo_factibilidade`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `iva`
@@ -450,19 +553,19 @@ ALTER TABLE `metodo_pagamento`
 -- AUTO_INCREMENT de la tabla `municipio`
 --
 ALTER TABLE `municipio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pessoa`
 --
 ALTER TABLE `pessoa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `provincia`
 --
 ALTER TABLE `provincia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `servico`
@@ -492,7 +595,7 @@ ALTER TABLE `tipo_servico`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `venda`
@@ -547,7 +650,8 @@ ALTER TABLE `pessoa`
 --
 ALTER TABLE `servico`
   ADD CONSTRAINT `servico_ibfk_1` FOREIGN KEY (`id_iva`) REFERENCES `iva` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `servico_ibfk_2` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_servico` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `servico_ibfk_2` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_servico` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `servico_ibfk_3` FOREIGN KEY (`id_estudo_factibilidade`) REFERENCES `estudo_factibilidade` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `solicitude`
