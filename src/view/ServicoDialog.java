@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -518,6 +520,10 @@ public class ServicoDialog extends javax.swing.JDialog {
             if (rows.length > 0) {
                 if (rows.length == 1) {
                     Servico obj = list_atual.get(rows[0]);
+                    
+                    EstudoFactibilidadeDialog form = new EstudoFactibilidadeDialog(pai, true);
+                    form.setServico(obj,this);
+                    form.setVisible(true);
                     
                 } else {
                     pai.control.messageUmaLinha();

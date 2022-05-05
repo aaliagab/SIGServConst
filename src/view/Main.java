@@ -391,9 +391,9 @@ public class Main extends javax.swing.JFrame {
         });
         menuServicos.add(jMenuItem5);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
-        jMenuItem4.setText("Solicitude");
+        jMenuItem4.setText("Pedido");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -728,7 +728,7 @@ public class Main extends javax.swing.JFrame {
                 msg = new Toast("Tipo de serviço deve ser inserido antes", 2000);
                 msg.showToast();
             } else {
-                ServicoDialog obj = new ServicoDialog(this, true);
+                ServicoDialog obj = new ServicoDialog(this, false);
                 obj.setVisible(true);
             }
         } catch (BussinessException ex) {
