@@ -237,7 +237,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SISTEMIG");
+        setTitle("SIGServConst");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/fondo.jpg"))); // NOI18N
 
@@ -383,7 +383,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
-        jMenuItem5.setText("Serviço");
+        jMenuItem5.setText("Serviços");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -393,7 +393,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
-        jMenuItem4.setText("Pedido");
+        jMenuItem4.setText("Pedidos novos");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -403,7 +403,7 @@ public class Main extends javax.swing.JFrame {
 
         menuItemHorarioManha.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemHorarioManha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_money_bag_28px.png"))); // NOI18N
-        menuItemHorarioManha.setText("Vendas");
+        menuItemHorarioManha.setText("Vendas de Pedidos");
         menuItemHorarioManha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemHorarioManhaActionPerformed(evt);
@@ -519,7 +519,9 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1017, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,17 +711,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-//        try {
-//            if (control.getPaisDAO().findAll().size() == 0) {
-//                msg = new Toast("País deve ser inserido antes", 2000);
-//                msg.showToast();
-//            } else {
-//                NacionalidadeDialog obj = new NacionalidadeDialog(this, true);
-//                obj.setVisible(true);
-//            }
-//        } catch (BussinessException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            if (control.getClienteDAO().findAll().size() == 0) {
+                msg = new Toast("Cliente deve ser inserido antes", 2000);
+                msg.showToast();
+            } else if (control.getServicoDAO().findAll().size() == 0) {
+                msg = new Toast("Serviço deve ser inserido antes", 2000);
+                msg.showToast();
+            } else {
+                SolicitudeDialog obj = new SolicitudeDialog(this, false);
+                obj.setVisible(true);
+            }
+        } catch (BussinessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
