@@ -155,21 +155,49 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public void menuChefeDpto() {
+    public void menuGerente() {
         //operacoes
         menuSeguranca.setVisible(false);
             
         menuServicos.setVisible(true);
+            menuItemCriarPed.setVisible(true);
+            menuItemIva.setVisible(true);
+            menuItemMetodos.setVisible(true);
+            menuItemPedNaoVend.setVisible(true);
+            menuItemServicos.setVisible(true);
+            menuItemTipo.setVisible(true);
+            menuItemVendidos.setVisible(true);
         menuPessoas.setVisible(true);
+            menuItemBairros.setVisible(true);
+            menuItemCargo.setVisible(true);
+            menuItemCliente.setVisible(true);
+            menuItemFuncionario.setVisible(true);
+            menuItemMunicipio.setVisible(true);
+            menuItemGenero.setVisible(true);
+            menuItemProvincia.setVisible(true);
         //relatorios
         menuImpressoes.setVisible(true);
     }
 
-    public void menuChefeSessao() {
+    public void menuVendedor() {
         menuSeguranca.setVisible(false);
             
         menuServicos.setVisible(true);
-        menuPessoas.setVisible(false);
+            menuItemCriarPed.setVisible(true);
+            menuItemIva.setVisible(false);
+            menuItemMetodos.setVisible(true);
+            menuItemPedNaoVend.setVisible(true);
+            menuItemServicos.setVisible(false);
+            menuItemTipo.setVisible(false);
+            menuItemVendidos.setVisible(true);
+        menuPessoas.setVisible(true);
+            menuItemBairros.setVisible(true);
+            menuItemCargo.setVisible(false);
+            menuItemCliente.setVisible(true);
+            menuItemFuncionario.setVisible(false);
+            menuItemMunicipio.setVisible(true);
+            menuItemGenero.setVisible(false);
+            menuItemProvincia.setVisible(true);
         //relatorios
         menuImpressoes.setVisible(true);
     }
@@ -178,16 +206,30 @@ public class Main extends javax.swing.JFrame {
         menuSeguranca.setVisible(true);
             
         menuServicos.setVisible(true);
+            menuItemCriarPed.setVisible(false);
+            menuItemIva.setVisible(true);
+            menuItemMetodos.setVisible(true);
+            menuItemPedNaoVend.setVisible(false);
+            menuItemServicos.setVisible(false);
+            menuItemTipo.setVisible(true);
+            menuItemVendidos.setVisible(false);
         menuPessoas.setVisible(true);
+            menuItemBairros.setVisible(true);
+            menuItemCargo.setVisible(true);
+            menuItemCliente.setVisible(false);
+            menuItemFuncionario.setVisible(true);
+            menuItemMunicipio.setVisible(true);
+            menuItemGenero.setVisible(false);
+            menuItemProvincia.setVisible(true);
         //relatorios
-        menuImpressoes.setVisible(true);
+        menuImpressoes.setVisible(false);
     }
 
     public void showMenuAcesso() {
         if (utilizador_login.getAcesso().getNome().equals("gerente")) {
-            menuChefeDpto();
+            menuGerente();
         } else if (utilizador_login.getAcesso().getNome().equals("vendedor")) {
-            menuChefeSessao();
+            menuVendedor();
         } else {
             menuAdmin();
         }
@@ -210,20 +252,21 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         menuPessoas = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
         menuItemGenero = new javax.swing.JMenuItem();
+        menuItemCargo = new javax.swing.JMenuItem();
         menuItemProvincia = new javax.swing.JMenuItem();
         menuItemMunicipio = new javax.swing.JMenuItem();
         menuItemBairros = new javax.swing.JMenuItem();
         menuItemFuncionario = new javax.swing.JMenuItem();
-        menuItemFuncionario1 = new javax.swing.JMenuItem();
+        menuItemCliente = new javax.swing.JMenuItem();
         menuServicos = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        menuItemNatureza = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        menuItemHorarioManha = new javax.swing.JMenuItem();
+        menuItemTipo = new javax.swing.JMenuItem();
+        menuItemIva = new javax.swing.JMenuItem();
+        menuItemMetodos = new javax.swing.JMenuItem();
+        menuItemServicos = new javax.swing.JMenuItem();
+        menuItemCriarPed = new javax.swing.JMenuItem();
+        menuItemPedNaoVend = new javax.swing.JMenuItem();
+        menuItemVendidos = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem28 = new javax.swing.JMenuItem();
         menuImpressoes = new javax.swing.JMenu();
@@ -275,25 +318,25 @@ public class Main extends javax.swing.JFrame {
         menuPessoas.setText("Pessoas");
         menuPessoas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
-        jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_male_and_female_28px_1.png"))); // NOI18N
-        jMenuItem14.setText("Gênero");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        menuPessoas.add(jMenuItem14);
-
-        menuItemGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        menuItemGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_identification_documents_28px.png"))); // NOI18N
-        menuItemGenero.setText("Cargos");
+        menuItemGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        menuItemGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_male_and_female_28px_1.png"))); // NOI18N
+        menuItemGenero.setText("Gênero");
         menuItemGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemGeneroActionPerformed(evt);
             }
         });
         menuPessoas.add(menuItemGenero);
+
+        menuItemCargo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        menuItemCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_identification_documents_28px.png"))); // NOI18N
+        menuItemCargo.setText("Cargos");
+        menuItemCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCargoActionPerformed(evt);
+            }
+        });
+        menuPessoas.add(menuItemCargo);
 
         menuItemProvincia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuItemProvincia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_australia_map_28px.png"))); // NOI18N
@@ -335,15 +378,15 @@ public class Main extends javax.swing.JFrame {
         });
         menuPessoas.add(menuItemFuncionario);
 
-        menuItemFuncionario1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        menuItemFuncionario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_human_head_28px.png"))); // NOI18N
-        menuItemFuncionario1.setText("Clientes");
-        menuItemFuncionario1.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        menuItemCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_human_head_28px.png"))); // NOI18N
+        menuItemCliente.setText("Clientes");
+        menuItemCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemFuncionario1ActionPerformed(evt);
+                menuItemClienteActionPerformed(evt);
             }
         });
-        menuPessoas.add(menuItemFuncionario1);
+        menuPessoas.add(menuItemCliente);
 
         jMenu1.add(menuPessoas);
 
@@ -351,65 +394,75 @@ public class Main extends javax.swing.JFrame {
         menuServicos.setText("Serviços");
         menuServicos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_type_28px.png"))); // NOI18N
-        jMenuItem3.setText("Tipos de serviços");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuItemTipo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_type_28px.png"))); // NOI18N
+        menuItemTipo.setText("Tipos de serviços");
+        menuItemTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuItemTipoActionPerformed(evt);
             }
         });
-        menuServicos.add(jMenuItem3);
+        menuServicos.add(menuItemTipo);
 
-        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_percentage_28px.png"))); // NOI18N
-        jMenuItem12.setText("Iva");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        menuItemIva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemIva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_percentage_28px.png"))); // NOI18N
+        menuItemIva.setText("Iva");
+        menuItemIva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                menuItemIvaActionPerformed(evt);
             }
         });
-        menuServicos.add(jMenuItem12);
+        menuServicos.add(menuItemIva);
 
-        menuItemNatureza.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        menuItemNatureza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_check_book_28px_1.png"))); // NOI18N
-        menuItemNatureza.setText("Métodos de pagamentos");
-        menuItemNatureza.addActionListener(new java.awt.event.ActionListener() {
+        menuItemMetodos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemMetodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_check_book_28px_1.png"))); // NOI18N
+        menuItemMetodos.setText("Métodos de pagamentos");
+        menuItemMetodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemNaturezaActionPerformed(evt);
+                menuItemMetodosActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemNatureza);
+        menuServicos.add(menuItemMetodos);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
-        jMenuItem5.setText("Serviços");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuItemServicos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
+        menuItemServicos.setText("Serviços");
+        menuItemServicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuItemServicosActionPerformed(evt);
             }
         });
-        menuServicos.add(jMenuItem5);
+        menuServicos.add(menuItemServicos);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
-        jMenuItem4.setText("Pedidos novos");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCriarPed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemCriarPed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
+        menuItemCriarPed.setText("Criar pedidos");
+        menuItemCriarPed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuItemCriarPedActionPerformed(evt);
             }
         });
-        menuServicos.add(jMenuItem4);
+        menuServicos.add(menuItemCriarPed);
 
-        menuItemHorarioManha.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        menuItemHorarioManha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_money_bag_28px.png"))); // NOI18N
-        menuItemHorarioManha.setText("Vendas de Pedidos");
-        menuItemHorarioManha.addActionListener(new java.awt.event.ActionListener() {
+        menuItemPedNaoVend.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemPedNaoVend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
+        menuItemPedNaoVend.setText("Pedidos não vendidos");
+        menuItemPedNaoVend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemHorarioManhaActionPerformed(evt);
+                menuItemPedNaoVendActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemHorarioManha);
+        menuServicos.add(menuItemPedNaoVend);
+
+        menuItemVendidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemVendidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_money_bag_28px.png"))); // NOI18N
+        menuItemVendidos.setText("Pedidos vendidos");
+        menuItemVendidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemVendidosActionPerformed(evt);
+            }
+        });
+        menuServicos.add(menuItemVendidos);
 
         jMenu1.add(menuServicos);
         jMenu1.add(jSeparator1);
@@ -552,10 +605,19 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemMunicipioActionPerformed
 
-    private void menuItemHorarioManhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemHorarioManhaActionPerformed
-        TipoServicoDialog obj = new TipoServicoDialog(this, true);
-        obj.setVisible(true);
-    }//GEN-LAST:event_menuItemHorarioManhaActionPerformed
+    private void menuItemVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVendidosActionPerformed
+        try {
+            if (control.getVendaDAO().findAll().size() == 0) {
+                msg = new Toast("Venda deve ser feita antes", 2000);
+                msg.showToast();
+            } else {
+                PedidoVendidoDialog obj = new PedidoVendidoDialog(this, false);
+                obj.setVisible(true);
+            }
+        } catch (BussinessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuItemVendidosActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
 
@@ -563,10 +625,10 @@ public class Main extends javax.swing.JFrame {
         l.show();
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
-    private void menuItemGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGeneroActionPerformed
+    private void menuItemCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCargoActionPerformed
         CargoDialog obj = new CargoDialog(this, true);
         obj.setVisible(true);
-    }//GEN-LAST:event_menuItemGeneroActionPerformed
+    }//GEN-LAST:event_menuItemCargoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         UsuariosDialog obj = new UsuariosDialog(this, true);
@@ -652,10 +714,10 @@ public class Main extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
-    private void menuItemNaturezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNaturezaActionPerformed
+    private void menuItemMetodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemMetodosActionPerformed
         MetodoPagamentoDialog obj = new MetodoPagamentoDialog(this, true);
         obj.setVisible(true);
-    }//GEN-LAST:event_menuItemNaturezaActionPerformed
+    }//GEN-LAST:event_menuItemMetodosActionPerformed
 
     private void menuItemBairrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBairrosActionPerformed
         try {
@@ -671,10 +733,10 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemBairrosActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void menuItemIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIvaActionPerformed
         IvaDialog obj = new IvaDialog(this, true);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_menuItemIvaActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
 //        try {
@@ -705,12 +767,12 @@ public class Main extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuItemTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTipoActionPerformed
         TipoServicoDialog obj = new TipoServicoDialog(this, true);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuItemTipoActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menuItemCriarPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCriarPedActionPerformed
         try {
             if (control.getClienteDAO().findAll().size() == 0) {
                 msg = new Toast("Cliente deve ser inserido antes", 2000);
@@ -725,9 +787,9 @@ public class Main extends javax.swing.JFrame {
         } catch (BussinessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menuItemCriarPedActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuItemServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemServicosActionPerformed
         try {
             if (control.getTipoServicoDAO().findAll().size() == 0) {
                 msg = new Toast("Tipo de serviço deve ser inserido antes", 2000);
@@ -739,7 +801,7 @@ public class Main extends javax.swing.JFrame {
         } catch (BussinessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuItemServicosActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
 //        try {
@@ -830,12 +892,12 @@ public class Main extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void menuItemGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGeneroActionPerformed
         GeneroDialog obj = new GeneroDialog(this, true);
         obj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_menuItemGeneroActionPerformed
 
-    private void menuItemFuncionario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFuncionario1ActionPerformed
+    private void menuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemClienteActionPerformed
         try {
             if (control.getBairroDAO().findAll().size() == 0) {
                 msg = new Toast("Bairro deve ser inserido antes.", 2000);
@@ -850,7 +912,21 @@ public class Main extends javax.swing.JFrame {
         } catch (BussinessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_menuItemFuncionario1ActionPerformed
+    }//GEN-LAST:event_menuItemClienteActionPerformed
+
+    private void menuItemPedNaoVendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPedNaoVendActionPerformed
+        try {
+            if (control.getEstadoSolicitudeDAO().findAll().size() == 0) {
+                msg = new Toast("Estado de Pedido deve ser inserido antes.", 2000);
+                msg.showToast();
+            } else {
+                PedidoNaoVendidoDialog obj = new PedidoNaoVendidoDialog(this, false);
+                obj.setVisible(true);
+            }
+        } catch (BussinessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuItemPedNaoVendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -899,29 +975,30 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu menuImpressoes;
     private javax.swing.JMenuItem menuItemBairros;
+    private javax.swing.JMenuItem menuItemCargo;
+    private javax.swing.JMenuItem menuItemCliente;
+    private javax.swing.JMenuItem menuItemCriarPed;
     private javax.swing.JMenuItem menuItemFuncionario;
-    private javax.swing.JMenuItem menuItemFuncionario1;
     private javax.swing.JMenuItem menuItemGenero;
-    private javax.swing.JMenuItem menuItemHorarioManha;
+    private javax.swing.JMenuItem menuItemIva;
+    private javax.swing.JMenuItem menuItemMetodos;
     private javax.swing.JMenuItem menuItemMunicipio;
-    private javax.swing.JMenuItem menuItemNatureza;
+    private javax.swing.JMenuItem menuItemPedNaoVend;
     private javax.swing.JMenuItem menuItemProvincia;
+    private javax.swing.JMenuItem menuItemServicos;
+    private javax.swing.JMenuItem menuItemTipo;
+    private javax.swing.JMenuItem menuItemVendidos;
     private javax.swing.JMenu menuPessoas;
     private javax.swing.JMenu menuSeguranca;
     private javax.swing.JMenu menuServicos;
