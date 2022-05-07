@@ -29,7 +29,12 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import pojos.Acesso;
 import pojos.EstadoSolicitude;
+import pojos.Servico;
 import pojos.Usuario;
+import reports.OrdenarFuncionariosVentaAnoAtual;
+import reports.OrdenarFuncionariosVentaMes;
+import reports.ServicosReport;
+import reports.VendaReport;
 
 /**
  *
@@ -270,14 +275,11 @@ public class Main extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem28 = new javax.swing.JMenuItem();
         menuImpressoes = new javax.swing.JMenu();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SIGServConst");
@@ -484,85 +486,55 @@ public class Main extends javax.swing.JFrame {
         menuImpressoes.setText("Informação");
         menuImpressoes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
-        jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem15.setText("Geral de Autorização de Residência");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem21.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
+        jMenuItem21.setText("Serviços");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
+                jMenuItem21ActionPerformed(evt);
             }
         });
-        menuImpressoes.add(jMenuItem15);
+        menuImpressoes.add(jMenuItem21);
 
-        jMenuItem16.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem16.setText("Geral de Visto de Permanência Temporária");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
+        jMenuItem17.setText("Vendas Totais de Funcionários no Mês");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                jMenuItem17ActionPerformed(evt);
             }
         });
-        menuImpressoes.add(jMenuItem16);
+        menuImpressoes.add(jMenuItem17);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem6.setText("Geral de Visto de Trabalho");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
+        jMenuItem18.setText("Vendas Totais de Funcionários no Ano");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jMenuItem18ActionPerformed(evt);
             }
         });
-        menuImpressoes.add(jMenuItem6);
+        menuImpressoes.add(jMenuItem18);
 
-        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem11.setText("Geral de Cartão de Residência");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem19.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
+        jMenuItem19.setText("Vendas de Funcionário por período");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                jMenuItem19ActionPerformed(evt);
             }
         });
-        menuImpressoes.add(jMenuItem11);
+        menuImpressoes.add(jMenuItem19);
 
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem8.setText("Autorização de Residência em Município");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem20.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
+        jMenuItem20.setText("Vendas no período");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                jMenuItem20ActionPerformed(evt);
             }
         });
-        menuImpressoes.add(jMenuItem8);
-
-        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem9.setText("Visto de Permanência Temporária em Município");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        menuImpressoes.add(jMenuItem9);
-
-        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem10.setText("Visto de Trabalho em Município");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        menuImpressoes.add(jMenuItem10);
-
-        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem13.setText("Cartão de Residência em Município");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        menuImpressoes.add(jMenuItem13);
+        menuImpressoes.add(jMenuItem20);
 
         jMenuBar1.add(menuImpressoes);
 
@@ -657,63 +629,6 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemFuncionarioActionPerformed
 
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-//        try {
-//            List<ResidentesReport> objs = new ArrayList<>();
-//            List<Emigrante> dist = control.getEmigranteDAO().findAll();
-//            for (Emigrante obj : dist) {
-//                if(obj.getCategoriaMigratoria().getTipoVisto().getNome().equals("Autorização de Residência"))
-//                objs.add(new ResidentesReport(obj));
-//            }
-//            try {
-//                JasperReport reporte = null;
-//                URL path = this.getClass().getResource("/reports/autorizacao_report_geral.jasper");
-//                Map<String, Object> parametros = new HashMap<>();
-//                parametros.put("logo", this.getClass().getResource("/resource/logo.jpg").toString());
-//                reporte = (JasperReport) JRLoader.loadObject(path);
-//                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-//                JasperViewer jviewer = new JasperViewer(jprint, false);
-//                jviewer.setVisible(true);
-//                jviewer.setTitle("autorizacao_report_geral");
-//
-//            } catch (Exception e) {
-//                msg = new Toast(e.getMessage(), 2000);
-//                msg.showToast();
-//            }
-//        } catch (BussinessException ex) {
-//            control.messageErroBussiness(ex);
-//        }
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
-
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-//      try {
-//            List<VistoPermanenciaReport> objs = new ArrayList<>();
-//            List<Emigrante> dist = control.getEmigranteDAO().findAll();
-//            for (Emigrante obj : dist) {
-//                if(obj.getCategoriaMigratoria().getTipoVisto().getNome().equals("Visto de Permanência Temporária"))
-//                objs.add(new VistoPermanenciaReport(obj));
-//            }
-//            try {
-//                JasperReport reporte = null;
-//                URL path = this.getClass().getResource("/reports/permanencia_report_geral.jasper");
-//                Map<String, Object> parametros = new HashMap<>();
-//                parametros.put("titulo", "VISTO DE PERMANÊNCIA TEMPORÁRIA");
-//                parametros.put("logo", this.getClass().getResource("/resource/logo.jpg").toString());
-//                reporte = (JasperReport) JRLoader.loadObject(path);
-//                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-//                JasperViewer jviewer = new JasperViewer(jprint, false);
-//                jviewer.setVisible(true);
-//                jviewer.setTitle("permanencia_report_geral");
-//
-//            } catch (Exception e) {
-//                msg = new Toast(e.getMessage(), 2000);
-//                msg.showToast();
-//            }
-//        } catch (BussinessException ex) {
-//            control.messageErroBussiness(ex);
-//        }
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
-
     private void menuItemMetodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemMetodosActionPerformed
         MetodoPagamentoDialog obj = new MetodoPagamentoDialog(this, true);
         obj.setVisible(true);
@@ -737,35 +652,6 @@ public class Main extends javax.swing.JFrame {
         IvaDialog obj = new IvaDialog(this, true);
         obj.setVisible(true);
     }//GEN-LAST:event_menuItemIvaActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-//        try {
-//            List<VistoPermanenciaReport> objs = new ArrayList<>();
-//            List<Emigrante> dist = control.getEmigranteDAO().findAll();
-//            for (Emigrante obj : dist) {
-//                if(obj.getCategoriaMigratoria().getTipoVisto().getNome().equals("Visto de Trabalho"))
-//                objs.add(new VistoPermanenciaReport(obj));
-//            }
-//            try {
-//                JasperReport reporte = null;
-//                URL path = this.getClass().getResource("/reports/permanencia_report_geral.jasper");
-//                Map<String, Object> parametros = new HashMap<>();
-//                parametros.put("titulo", "VISTO DE TRABALHO");
-//                parametros.put("logo", this.getClass().getResource("/resource/logo.jpg").toString());
-//                reporte = (JasperReport) JRLoader.loadObject(path);
-//                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-//                JasperViewer jviewer = new JasperViewer(jprint, false);
-//                jviewer.setVisible(true);
-//                jviewer.setTitle("trabalho_report_geral");
-//
-//            } catch (Exception e) {
-//                msg = new Toast(e.getMessage(), 2000);
-//                msg.showToast();
-//            }
-//        } catch (BussinessException ex) {
-//            control.messageErroBussiness(ex);
-//        }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menuItemTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTipoActionPerformed
         TipoServicoDialog obj = new TipoServicoDialog(this, true);
@@ -803,95 +689,6 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemServicosActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-//        try {
-//            List<CartaoReport> objs = new ArrayList<>();
-//            List<Emigrante> dist = control.getEmigranteDAO().findAll();
-//            for (Emigrante obj : dist) {
-//                if(obj.getCategoriaMigratoria().getTipoVisto().getNome().equals("Cartão de Residência"))
-//                objs.add(new CartaoReport(obj));
-//            }
-//            try {
-//                JasperReport reporte = null;
-//                URL path = this.getClass().getResource("/reports/cartao_report_geral.jasper");
-//                Map<String, Object> parametros = new HashMap<>();
-//                parametros.put("logo", this.getClass().getResource("/resource/logo.jpg").toString());
-//                reporte = (JasperReport) JRLoader.loadObject(path);
-//                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-//                JasperViewer jviewer = new JasperViewer(jprint, false);
-//                jviewer.setVisible(true);
-//                jviewer.setTitle("cartao_report_geral");
-//
-//            } catch (Exception e) {
-//                msg = new Toast(e.getMessage(), 2000);
-//                msg.showToast();
-//            }
-//        } catch (BussinessException ex) {
-//            control.messageErroBussiness(ex);
-//        }
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-//        try {
-//            if (control.getMunicipioDAO().findAll().size() == 0) {
-//                msg = new Toast("Município deve ser inserido antes", 2000);
-//                msg.showToast();
-//            } else {
-//                MunicipioReportDialog obj = new MunicipioReportDialog(this, false);
-//                obj.tipoAutoPermTrabCart(true, false, false, false);
-//                obj.setVisible(true);
-//            }
-//        } catch (BussinessException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-//        try {
-//            if (control.getMunicipioDAO().findAll().size() == 0) {
-//                msg = new Toast("Município deve ser inserido antes", 2000);
-//                msg.showToast();
-//            } else {
-//                MunicipioReportDialog obj = new MunicipioReportDialog(this, false);
-//                obj.tipoAutoPermTrabCart(false, true, false, false);
-//                obj.setVisible(true);
-//            }
-//        } catch (BussinessException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-//        try {
-//            if (control.getMunicipioDAO().findAll().size() == 0) {
-//                msg = new Toast("Município deve ser inserido antes", 2000);
-//                msg.showToast();
-//            } else {
-//                MunicipioReportDialog obj = new MunicipioReportDialog(this, false);
-//                obj.tipoAutoPermTrabCart(false, false, true, false);
-//                obj.setVisible(true);
-//            }
-//        } catch (BussinessException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
-
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-//        try {
-//            if (control.getMunicipioDAO().findAll().size() == 0) {
-//                msg = new Toast("Município deve ser inserido antes", 2000);
-//                msg.showToast();
-//            } else {
-//                MunicipioReportDialog obj = new MunicipioReportDialog(this, false);
-//                obj.tipoAutoPermTrabCart(false, false, false, true);
-//                obj.setVisible(true);
-//            }
-//        } catch (BussinessException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
-
     private void menuItemGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGeneroActionPerformed
         GeneroDialog obj = new GeneroDialog(this, true);
         obj.setVisible(true);
@@ -927,6 +724,96 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuItemPedNaoVendActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        List<VendaReport> objs = new ArrayList<>();
+        OrdenarFuncionariosVentaMes obj = new OrdenarFuncionariosVentaMes();
+        objs = obj.getVenda_ordenadas();
+        try {
+            JasperReport reporte = null;
+            URL path = this.getClass().getResource("/reports/func_vendas_mes_report.jasper");
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+            reporte = (JasperReport) JRLoader.loadObject(path);
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+            JasperViewer jviewer = new JasperViewer(jprint, false);
+            jviewer.setVisible(true);
+            jviewer.setTitle("func_vendas_mes_report");
+
+        } catch (Exception e) {
+            msg = new Toast(e.getMessage(), 2000);
+            msg.showToast();
+        }
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        List<VendaReport> objs = new ArrayList<>();
+        OrdenarFuncionariosVentaAnoAtual obj = new OrdenarFuncionariosVentaAnoAtual();
+        objs = obj.getVenda_ordenadas();
+        try {
+            JasperReport reporte = null;
+            URL path = this.getClass().getResource("/reports/func_vendas_ano_report.jasper");
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+            parametros.put("ano", (((new Date().getYear())+1900)+"").substring((((new Date().getYear())+1900)+"").length()-4));
+            reporte = (JasperReport) JRLoader.loadObject(path);
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+            JasperViewer jviewer = new JasperViewer(jprint, false);
+            jviewer.setVisible(true);
+            jviewer.setTitle("func_vendas_ano_report");
+
+        } catch (Exception e) {
+            msg = new Toast(e.getMessage(), 2000);
+            msg.showToast();
+        }
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        try {
+            if (control.getFuncionarioDAO().findAll().size() == 0) {
+                msg = new Toast("Funcionário deve ser inserido antes.", 2000);
+                msg.showToast();
+            } else {
+                VendaFuncionarioPeriodo obj = new VendaFuncionarioPeriodo(this, false);
+                obj.setVisible(true);
+            }
+        } catch (BussinessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        VendaPeriodo obj = new VendaPeriodo(this, false);
+        obj.setVisible(true);
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        try {
+            List<ServicosReport> objs = new ArrayList<>();
+            List<Servico> produtos = control.getServicoDAO().findAll();
+            for (Servico produto : produtos) {
+                objs.add(new ServicosReport(produto));
+            }
+            try {
+                JasperReport reporte = null;
+                URL path = this.getClass().getResource("/reports/servico_report.jasper");
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+                reporte = (JasperReport) JRLoader.loadObject(path);
+                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+                JasperViewer jviewer = new JasperViewer(jprint, false);
+                jviewer.setVisible(true);
+                jviewer.setTitle("servicos_report");
+
+            } catch (Exception e) {
+                msg = new Toast(e.getMessage(), 2000);
+                msg.showToast();
+            }
+        } catch (BussinessException ex) {
+            control.messageErroBussiness(ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -973,16 +860,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu menuImpressoes;
     private javax.swing.JMenuItem menuItemBairros;
