@@ -31,9 +31,9 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import pojos.Solicitude;
 import pojos.EstadoSolicitude;
 import pojos.MetodoPagamento;
-import pojos.SolicitudeServico;
+import pojos.SolicitudeBilhete;
 import pojos.Venda;
-import reports.SolicitudeServicoReport;
+import reports.SolicitudeBilheteReport;
 
 /**
  *
@@ -82,18 +82,18 @@ public class PedidoNaoVendidoDialog extends javax.swing.JDialog {
 
     public float valor(Solicitude obj) {
         float valor = 0;
-        for (SolicitudeServico solserv : obj.getSolicitudeServicos()) {
-            valor += solserv.getQuantidade() * solserv.getServico().getValor();
+        for (SolicitudeBilhete solserv : obj.getSolicitudeBilhetes()) {
+            valor += solserv.getQuantidade() * solserv.getBilhete().getValor();
         }
         return valor;
     }
 
     public void printPedido(Solicitude sol) {
-        List<SolicitudeServicoReport> objs = new ArrayList<>();
+        List<SolicitudeBilheteReport> objs = new ArrayList<>();
         double total = 0;
-        for (SolicitudeServico produtos_venda : sol.getSolicitudeServicos()) {
-            objs.add(new SolicitudeServicoReport(produtos_venda));
-            total += produtos_venda.getQuantidade() * produtos_venda.getServico().getValor();
+        for (SolicitudeBilhete produtos_venda : sol.getSolicitudeBilhetes()) {
+            objs.add(new SolicitudeBilheteReport(produtos_venda));
+            total += produtos_venda.getQuantidade() * produtos_venda.getBilhete().getValor();
         }
         try {
             JasperReport reporte = null;
@@ -126,7 +126,7 @@ public class PedidoNaoVendidoDialog extends javax.swing.JDialog {
                     estados.add(obj);
                     comboEstado.addItem(obj.getNome());
                 } else {
-                    estados.remove(obj);
+//                    estados.remove(obj);
                 }
             }
             metodos = pai.control.getMetodoPagamentoDAO().findAll();
@@ -143,10 +143,11 @@ public class PedidoNaoVendidoDialog extends javax.swing.JDialog {
         model.setNumRows(0);
         try {
             List<Solicitude> list = daoObject.findAll();
-            list_atual = list;
+            list_atual = new ArrayList<>();
             for (Solicitude obj : list) {
                 if (!obj.getEstadoSolicitude().getNome().equals("Realizado")) {
                     addRowTableModel(model, obj);
+                    list_atual.add(obj);
                 }
             }
         } catch (BussinessException ex) {
@@ -307,12 +308,13 @@ public class PedidoNaoVendidoDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(comboMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(trocarBtn)
@@ -373,7 +375,6 @@ public class PedidoNaoVendidoDialog extends javax.swing.JDialog {
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         Solicitude obj = list_atual.get(tabela.getSelectedRow());
-        comboEstado.setSelectedItem(obj.getEstadoSolicitude().getNome());
         comboEstado.setSelectedItem(obj.getEstadoSolicitude().getNome());
     }//GEN-LAST:event_tabelaMouseClicked
 

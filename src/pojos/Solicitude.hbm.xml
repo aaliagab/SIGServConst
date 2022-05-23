@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-may-2022 19:11:42 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojos.Solicitude" table="solicitude" catalog="servicomultiples" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -20,11 +20,11 @@
         <property name="data" type="date">
             <column name="data" length="10" not-null="true" />
         </property>
-        <set name="solicitudeServicos" table="solicitude_servico" inverse="true" lazy="true" fetch="select">
+        <set name="solicitudeBilhetes" table="solicitude_bilhete" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_solicitude" not-null="true" />
             </key>
-            <one-to-many class="pojos.SolicitudeServico" />
+            <one-to-many class="pojos.SolicitudeBilhete" />
         </set>
         <set name="vendas" table="venda" inverse="true" lazy="true" fetch="select">
             <key>

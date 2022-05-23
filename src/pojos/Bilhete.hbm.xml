@@ -1,20 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-may-2022 19:11:42 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="pojos.Servico" table="servico" catalog="servicomultiples" optimistic-lock="version">
+    <class name="pojos.Bilhete" table="bilhete" catalog="servicomultiples" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="estudoFactibilidade" class="pojos.EstudoFactibilidade" fetch="select">
-            <column name="id_estudo_factibilidade" />
-        </many-to-one>
         <many-to-one name="iva" class="pojos.Iva" fetch="select">
             <column name="id_iva" />
         </many-to-one>
-        <many-to-one name="tipoServico" class="pojos.TipoServico" fetch="select">
+        <many-to-one name="tipo" class="pojos.Tipo" fetch="select">
             <column name="id_tipo" not-null="true" />
         </many-to-one>
         <property name="nome" type="string">
@@ -26,14 +23,14 @@
         <property name="valor" type="double">
             <column name="valor" precision="10" not-null="true" />
         </property>
-        <property name="descricao" type="string">
-            <column name="descricao" not-null="true" />
+        <property name="quantidade" type="int">
+            <column name="quantidade" not-null="true" />
         </property>
-        <set name="solicitudeServicos" table="solicitude_servico" inverse="true" lazy="true" fetch="select">
+        <set name="solicitudeBilhetes" table="solicitude_bilhete" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_servico" not-null="true" />
             </key>
-            <one-to-many class="pojos.SolicitudeServico" />
+            <one-to-many class="pojos.SolicitudeBilhete" />
         </set>
     </class>
 </hibernate-mapping>

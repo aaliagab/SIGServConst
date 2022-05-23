@@ -1,5 +1,5 @@
 package pojos;
-// Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1
+// Generated 22-may-2022 19:11:40 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -17,7 +17,7 @@ public class Solicitude  implements java.io.Serializable {
      private EstadoSolicitude estadoSolicitude;
      private String num;
      private Date data;
-     private Set<SolicitudeServico> solicitudeServicos = new HashSet<SolicitudeServico>(0);
+     private Set<SolicitudeBilhete> solicitudeBilhetes = new HashSet<SolicitudeBilhete>(0);
      private Set<Venda> vendas = new HashSet<Venda>(0);
 
     public Solicitude() {
@@ -29,12 +29,12 @@ public class Solicitude  implements java.io.Serializable {
         this.estadoSolicitude = estadoSolicitude;
         this.data = data;
     }
-    public Solicitude(Cliente cliente, EstadoSolicitude estadoSolicitude, String num, Date data, Set<SolicitudeServico> solicitudeServicos, Set<Venda> vendas) {
+    public Solicitude(Cliente cliente, EstadoSolicitude estadoSolicitude, String num, Date data, Set<SolicitudeBilhete> solicitudeBilhetes, Set<Venda> vendas) {
        this.cliente = cliente;
        this.estadoSolicitude = estadoSolicitude;
        this.num = num;
        this.data = data;
-       this.solicitudeServicos = solicitudeServicos;
+       this.solicitudeBilhetes = solicitudeBilhetes;
        this.vendas = vendas;
     }
    
@@ -73,12 +73,12 @@ public class Solicitude  implements java.io.Serializable {
     public void setData(Date data) {
         this.data = data;
     }
-    public Set<SolicitudeServico> getSolicitudeServicos() {
-        return this.solicitudeServicos;
+    public Set<SolicitudeBilhete> getSolicitudeBilhetes() {
+        return this.solicitudeBilhetes;
     }
     
-    public void setSolicitudeServicos(Set<SolicitudeServico> solicitudeServicos) {
-        this.solicitudeServicos = solicitudeServicos;
+    public void setSolicitudeBilhetes(Set<SolicitudeBilhete> solicitudeBilhetes) {
+        this.solicitudeBilhetes = solicitudeBilhetes;
     }
     public Set<Venda> getVendas() {
         return this.vendas;

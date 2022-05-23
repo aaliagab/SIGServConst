@@ -29,11 +29,11 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import pojos.Acesso;
 import pojos.EstadoSolicitude;
-import pojos.Servico;
+import pojos.Bilhete;
 import pojos.Usuario;
 import reports.OrdenarFuncionariosVentaAnoAtual;
 import reports.OrdenarFuncionariosVentaMes;
-import reports.ServicosReport;
+import reports.BilheteReport;
 import reports.VendaReport;
 
 /**
@@ -98,7 +98,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     public void setBemvindo(String text) {
-        this.setTitle(this.getTitle() + " SEJA BEM-VIND@ " + text.toUpperCase());
+        this.setTitle("SIGViagem - SEJA BEM-VIND@ " + text.toUpperCase());
     }
 
     @Override
@@ -164,12 +164,12 @@ public class Main extends javax.swing.JFrame {
         //operacoes
         menuSeguranca.setVisible(false);
             
-        menuServicos.setVisible(true);
+        menuBilhete.setVisible(true);
             menuItemCriarPed.setVisible(true);
             menuItemIva.setVisible(true);
             menuItemMetodos.setVisible(true);
             menuItemPedNaoVend.setVisible(true);
-            menuItemServicos.setVisible(true);
+            menuItemBilhetes.setVisible(true);
             menuItemTipo.setVisible(true);
             menuItemVendidos.setVisible(true);
         menuPessoas.setVisible(true);
@@ -187,12 +187,12 @@ public class Main extends javax.swing.JFrame {
     public void menuVendedor() {
         menuSeguranca.setVisible(false);
             
-        menuServicos.setVisible(true);
+        menuBilhete.setVisible(true);
             menuItemCriarPed.setVisible(true);
             menuItemIva.setVisible(false);
             menuItemMetodos.setVisible(true);
             menuItemPedNaoVend.setVisible(true);
-            menuItemServicos.setVisible(false);
+            menuItemBilhetes.setVisible(false);
             menuItemTipo.setVisible(false);
             menuItemVendidos.setVisible(true);
         menuPessoas.setVisible(true);
@@ -210,12 +210,12 @@ public class Main extends javax.swing.JFrame {
     public void menuAdmin() {
         menuSeguranca.setVisible(true);
             
-        menuServicos.setVisible(true);
+        menuBilhete.setVisible(true);
             menuItemCriarPed.setVisible(false);
             menuItemIva.setVisible(true);
             menuItemMetodos.setVisible(true);
             menuItemPedNaoVend.setVisible(false);
-            menuItemServicos.setVisible(false);
+            menuItemBilhetes.setVisible(false);
             menuItemTipo.setVisible(true);
             menuItemVendidos.setVisible(false);
         menuPessoas.setVisible(true);
@@ -264,11 +264,11 @@ public class Main extends javax.swing.JFrame {
         menuItemBairros = new javax.swing.JMenuItem();
         menuItemFuncionario = new javax.swing.JMenuItem();
         menuItemCliente = new javax.swing.JMenuItem();
-        menuServicos = new javax.swing.JMenu();
+        menuBilhete = new javax.swing.JMenu();
         menuItemTipo = new javax.swing.JMenuItem();
         menuItemIva = new javax.swing.JMenuItem();
         menuItemMetodos = new javax.swing.JMenuItem();
-        menuItemServicos = new javax.swing.JMenuItem();
+        menuItemBilhetes = new javax.swing.JMenuItem();
         menuItemCriarPed = new javax.swing.JMenuItem();
         menuItemPedNaoVend = new javax.swing.JMenuItem();
         menuItemVendidos = new javax.swing.JMenuItem();
@@ -392,19 +392,19 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.add(menuPessoas);
 
-        menuServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
-        menuServicos.setText("Serviços");
-        menuServicos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        menuBilhete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
+        menuBilhete.setText("Bilhetes");
+        menuBilhete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         menuItemTipo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_type_28px.png"))); // NOI18N
-        menuItemTipo.setText("Tipos de serviços");
+        menuItemTipo.setText("Tipos de bilhetes");
         menuItemTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemTipoActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemTipo);
+        menuBilhete.add(menuItemTipo);
 
         menuItemIva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemIva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_percentage_28px.png"))); // NOI18N
@@ -414,7 +414,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemIvaActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemIva);
+        menuBilhete.add(menuItemIva);
 
         menuItemMetodos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemMetodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_check_book_28px_1.png"))); // NOI18N
@@ -424,17 +424,17 @@ public class Main extends javax.swing.JFrame {
                 menuItemMetodosActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemMetodos);
+        menuBilhete.add(menuItemMetodos);
 
-        menuItemServicos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        menuItemServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
-        menuItemServicos.setText("Serviços");
-        menuItemServicos.addActionListener(new java.awt.event.ActionListener() {
+        menuItemBilhetes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItemBilhetes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_service_28px.png"))); // NOI18N
+        menuItemBilhetes.setText("Bilhetes");
+        menuItemBilhetes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemServicosActionPerformed(evt);
+                menuItemBilhetesActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemServicos);
+        menuBilhete.add(menuItemBilhetes);
 
         menuItemCriarPed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemCriarPed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
@@ -444,7 +444,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemCriarPedActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemCriarPed);
+        menuBilhete.add(menuItemCriarPed);
 
         menuItemPedNaoVend.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemPedNaoVend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_application_window_28px.png"))); // NOI18N
@@ -454,7 +454,7 @@ public class Main extends javax.swing.JFrame {
                 menuItemPedNaoVendActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemPedNaoVend);
+        menuBilhete.add(menuItemPedNaoVend);
 
         menuItemVendidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemVendidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_money_bag_28px.png"))); // NOI18N
@@ -464,9 +464,9 @@ public class Main extends javax.swing.JFrame {
                 menuItemVendidosActionPerformed(evt);
             }
         });
-        menuServicos.add(menuItemVendidos);
+        menuBilhete.add(menuItemVendidos);
 
-        jMenu1.add(menuServicos);
+        jMenu1.add(menuBilhete);
         jMenu1.add(jSeparator1);
 
         jMenuItem28.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
@@ -488,7 +488,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem21.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icons8_pdf_28px_3.png"))); // NOI18N
-        jMenuItem21.setText("Serviços");
+        jMenuItem21.setText("Bilhetes");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem21ActionPerformed(evt);
@@ -654,7 +654,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemIvaActionPerformed
 
     private void menuItemTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTipoActionPerformed
-        TipoServicoDialog obj = new TipoServicoDialog(this, true);
+        TipoDialog obj = new TipoDialog(this, true);
         obj.setVisible(true);
     }//GEN-LAST:event_menuItemTipoActionPerformed
 
@@ -663,7 +663,7 @@ public class Main extends javax.swing.JFrame {
             if (control.getClienteDAO().findAll().size() == 0) {
                 msg = new Toast("Cliente deve ser inserido antes", 2000);
                 msg.showToast();
-            } else if (control.getServicoDAO().findAll().size() == 0) {
+            } else if (control.getBilheteDAO().findAll().size() == 0) {
                 msg = new Toast("Serviço deve ser inserido antes", 2000);
                 msg.showToast();
             } else {
@@ -675,19 +675,19 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemCriarPedActionPerformed
 
-    private void menuItemServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemServicosActionPerformed
+    private void menuItemBilhetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBilhetesActionPerformed
         try {
-            if (control.getTipoServicoDAO().findAll().size() == 0) {
+            if (control.getTipoDAO().findAll().size() == 0) {
                 msg = new Toast("Tipo de serviço deve ser inserido antes", 2000);
                 msg.showToast();
             } else {
-                ServicoDialog obj = new ServicoDialog(this, false);
+                BilheteDialog obj = new BilheteDialog(this, false);
                 obj.setVisible(true);
             }
         } catch (BussinessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_menuItemServicosActionPerformed
+    }//GEN-LAST:event_menuItemBilhetesActionPerformed
 
     private void menuItemGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGeneroActionPerformed
         GeneroDialog obj = new GeneroDialog(this, true);
@@ -726,92 +726,92 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemPedNaoVendActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        List<VendaReport> objs = new ArrayList<>();
-        OrdenarFuncionariosVentaMes obj = new OrdenarFuncionariosVentaMes();
-        objs = obj.getVenda_ordenadas();
-        try {
-            JasperReport reporte = null;
-            URL path = this.getClass().getResource("/reports/func_vendas_mes_report.jasper");
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
-            reporte = (JasperReport) JRLoader.loadObject(path);
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-            JasperViewer jviewer = new JasperViewer(jprint, false);
-            jviewer.setVisible(true);
-            jviewer.setTitle("func_vendas_mes_report");
-
-        } catch (Exception e) {
-            msg = new Toast(e.getMessage(), 2000);
-            msg.showToast();
-        }
+//        List<VendaReport> objs = new ArrayList<>();
+//        OrdenarFuncionariosVentaMes obj = new OrdenarFuncionariosVentaMes();
+//        objs = obj.getVenda_ordenadas();
+//        try {
+//            JasperReport reporte = null;
+//            URL path = this.getClass().getResource("/reports/func_vendas_mes_report.jasper");
+//            Map<String, Object> parametros = new HashMap<>();
+//            parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+//            reporte = (JasperReport) JRLoader.loadObject(path);
+//            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+//            JasperViewer jviewer = new JasperViewer(jprint, false);
+//            jviewer.setVisible(true);
+//            jviewer.setTitle("func_vendas_mes_report");
+//
+//        } catch (Exception e) {
+//            msg = new Toast(e.getMessage(), 2000);
+//            msg.showToast();
+//        }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        List<VendaReport> objs = new ArrayList<>();
-        OrdenarFuncionariosVentaAnoAtual obj = new OrdenarFuncionariosVentaAnoAtual();
-        objs = obj.getVenda_ordenadas();
-        try {
-            JasperReport reporte = null;
-            URL path = this.getClass().getResource("/reports/func_vendas_ano_report.jasper");
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
-            parametros.put("ano", (((new Date().getYear())+1900)+"").substring((((new Date().getYear())+1900)+"").length()-4));
-            reporte = (JasperReport) JRLoader.loadObject(path);
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-            JasperViewer jviewer = new JasperViewer(jprint, false);
-            jviewer.setVisible(true);
-            jviewer.setTitle("func_vendas_ano_report");
-
-        } catch (Exception e) {
-            msg = new Toast(e.getMessage(), 2000);
-            msg.showToast();
-        }
+//        List<VendaReport> objs = new ArrayList<>();
+//        OrdenarFuncionariosVentaAnoAtual obj = new OrdenarFuncionariosVentaAnoAtual();
+//        objs = obj.getVenda_ordenadas();
+//        try {
+//            JasperReport reporte = null;
+//            URL path = this.getClass().getResource("/reports/func_vendas_ano_report.jasper");
+//            Map<String, Object> parametros = new HashMap<>();
+//            parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+//            parametros.put("ano", (((new Date().getYear())+1900)+"").substring((((new Date().getYear())+1900)+"").length()-4));
+//            reporte = (JasperReport) JRLoader.loadObject(path);
+//            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+//            JasperViewer jviewer = new JasperViewer(jprint, false);
+//            jviewer.setVisible(true);
+//            jviewer.setTitle("func_vendas_ano_report");
+//
+//        } catch (Exception e) {
+//            msg = new Toast(e.getMessage(), 2000);
+//            msg.showToast();
+//        }
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        try {
-            if (control.getFuncionarioDAO().findAll().size() == 0) {
-                msg = new Toast("Funcionário deve ser inserido antes.", 2000);
-                msg.showToast();
-            } else {
-                VendaFuncionarioPeriodo obj = new VendaFuncionarioPeriodo(this, false);
-                obj.setVisible(true);
-            }
-        } catch (BussinessException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            if (control.getFuncionarioDAO().findAll().size() == 0) {
+//                msg = new Toast("Funcionário deve ser inserido antes.", 2000);
+//                msg.showToast();
+//            } else {
+//                VendaFuncionarioPeriodo obj = new VendaFuncionarioPeriodo(this, false);
+//                obj.setVisible(true);
+//            }
+//        } catch (BussinessException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-        VendaPeriodo obj = new VendaPeriodo(this, false);
-        obj.setVisible(true);
+//        VendaPeriodo obj = new VendaPeriodo(this, false);
+//        obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
-        try {
-            List<ServicosReport> objs = new ArrayList<>();
-            List<Servico> produtos = control.getServicoDAO().findAll();
-            for (Servico produto : produtos) {
-                objs.add(new ServicosReport(produto));
-            }
-            try {
-                JasperReport reporte = null;
-                URL path = this.getClass().getResource("/reports/servico_report.jasper");
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
-                reporte = (JasperReport) JRLoader.loadObject(path);
-                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
-                JasperViewer jviewer = new JasperViewer(jprint, false);
-                jviewer.setVisible(true);
-                jviewer.setTitle("servicos_report");
-
-            } catch (Exception e) {
-                msg = new Toast(e.getMessage(), 2000);
-                msg.showToast();
-            }
-        } catch (BussinessException ex) {
-            control.messageErroBussiness(ex);
-        }
+//        try {
+//            List<BilheteReport> objs = new ArrayList<>();
+//            List<Bilhete> produtos = control.getBilheteDAO().findAll();
+//            for (Bilhete produto : produtos) {
+//                objs.add(new BilheteReport(produto));
+//            }
+//            try {
+//                JasperReport reporte = null;
+//                URL path = this.getClass().getResource("/reports/servico_report.jasper");
+//                Map<String, Object> parametros = new HashMap<>();
+//                parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+//                reporte = (JasperReport) JRLoader.loadObject(path);
+//                JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, new JRBeanCollectionDataSource(objs));
+//                JasperViewer jviewer = new JasperViewer(jprint, false);
+//                jviewer.setVisible(true);
+//                jviewer.setTitle("bilhetes_report");
+//
+//            } catch (Exception e) {
+//                msg = new Toast(e.getMessage(), 2000);
+//                msg.showToast();
+//            }
+//        } catch (BussinessException ex) {
+//            control.messageErroBussiness(ex);
+//        }
 
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
@@ -868,8 +868,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenu menuBilhete;
     private javax.swing.JMenu menuImpressoes;
     private javax.swing.JMenuItem menuItemBairros;
+    private javax.swing.JMenuItem menuItemBilhetes;
     private javax.swing.JMenuItem menuItemCargo;
     private javax.swing.JMenuItem menuItemCliente;
     private javax.swing.JMenuItem menuItemCriarPed;
@@ -880,11 +882,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemMunicipio;
     private javax.swing.JMenuItem menuItemPedNaoVend;
     private javax.swing.JMenuItem menuItemProvincia;
-    private javax.swing.JMenuItem menuItemServicos;
     private javax.swing.JMenuItem menuItemTipo;
     private javax.swing.JMenuItem menuItemVendidos;
     private javax.swing.JMenu menuPessoas;
     private javax.swing.JMenu menuSeguranca;
-    private javax.swing.JMenu menuServicos;
     // End of variables declaration//GEN-END:variables
 }

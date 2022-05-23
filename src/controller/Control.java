@@ -1,6 +1,6 @@
 package controller;
 
-import dao.TipoServicoDAOImplement;
+import dao.TipoDAOImplement;
 import dao.PessoaDAOImplement;
 import dao.UsuarioDAOImplement;
 import dao.MetodoPagamentoDAOImplement;
@@ -11,7 +11,7 @@ import dao.SolicitudeDAOImplement;
 import dao.FuncionarioDAOImplement;
 import dao.GeneroDAOImplement;
 import dao.ClienteDAOImplement;
-import dao.ServicoDAOImplement;
+import dao.BilheteDAOImplement;
 import dao.EstudoFactibilidadeDAOImplement;
 import dao.BairroDAOImplement;
 import dao.EstadoSolicitudeDAOImplement;
@@ -20,7 +20,7 @@ import dao.BussinessException;
 import dao.ProvinciaDAOImplement;
 import dao.IvaDAOImplement;
 import dao.VendaDAOImplement;
-import dao.SolicitudeServicoDAOImplement;
+import dao.SolicitudeBilheteDAOImplement;
 
 /**
  *
@@ -28,7 +28,7 @@ import dao.SolicitudeServicoDAOImplement;
  */
 public class Control {
 
-    private TipoServicoDAOImplement TipoServicoDAO;
+    private TipoDAOImplement TipoDAO;
     private PessoaDAOImplement PessoaDAO;
     private UsuarioDAOImplement UsuarioDAO;
     private MetodoPagamentoDAOImplement MetodoPagamentoDAO;
@@ -39,7 +39,7 @@ public class Control {
     private FuncionarioDAOImplement FuncionarioDAO;
     private GeneroDAOImplement GeneroDAO;
     private ClienteDAOImplement ClienteDAO;
-    private ServicoDAOImplement ServicoDAO;
+    private BilheteDAOImplement BilheteDAO;
     private EstudoFactibilidadeDAOImplement EstudoFactibilidadeDAO;
     private BairroDAOImplement BairroDAO;
     private EstadoSolicitudeDAOImplement EstadoSolicitudeDAO;
@@ -47,11 +47,11 @@ public class Control {
     private ProvinciaDAOImplement ProvinciaDAO;
     private IvaDAOImplement IvaDAO;
     private VendaDAOImplement VendaDAO;
-    private SolicitudeServicoDAOImplement SolicitudeServicoDAO;
+    private SolicitudeBilheteDAOImplement SolicitudeBilheteDAO;
     private Toast msg;
 
     public Control() {
-        TipoServicoDAO = new TipoServicoDAOImplement();
+        TipoDAO = new TipoDAOImplement();
         PessoaDAO = new PessoaDAOImplement();
         UsuarioDAO = new UsuarioDAOImplement();
         MetodoPagamentoDAO = new MetodoPagamentoDAOImplement();
@@ -62,7 +62,7 @@ public class Control {
         FuncionarioDAO = new FuncionarioDAOImplement();
         GeneroDAO = new GeneroDAOImplement();
         ClienteDAO = new ClienteDAOImplement();
-        ServicoDAO = new ServicoDAOImplement();
+        BilheteDAO = new BilheteDAOImplement();
         EstudoFactibilidadeDAO = new EstudoFactibilidadeDAOImplement();
         BairroDAO = new BairroDAOImplement();
         EstadoSolicitudeDAO = new EstadoSolicitudeDAOImplement();
@@ -70,11 +70,11 @@ public class Control {
         ProvinciaDAO = new ProvinciaDAOImplement();
         IvaDAO = new IvaDAOImplement();
         VendaDAO = new VendaDAOImplement();
-        SolicitudeServicoDAO = new SolicitudeServicoDAOImplement();
+        SolicitudeBilheteDAO = new SolicitudeBilheteDAOImplement();
     }
 
-    public TipoServicoDAOImplement getTipoServicoDAO() {
-        return TipoServicoDAO;
+    public TipoDAOImplement getTipoDAO() {
+        return TipoDAO;
     }
 
     public PessoaDAOImplement getPessoaDAO() {
@@ -117,8 +117,8 @@ public class Control {
         return ClienteDAO;
     }
 
-    public ServicoDAOImplement getServicoDAO() {
-        return ServicoDAO;
+    public BilheteDAOImplement getBilheteDAO() {
+        return BilheteDAO;
     }
 
     public EstudoFactibilidadeDAOImplement getEstudoFactibilidadeDAO() {
@@ -149,8 +149,8 @@ public class Control {
         return VendaDAO;
     }
 
-    public SolicitudeServicoDAOImplement getSolicitudeServicoDAO() {
-        return SolicitudeServicoDAO;
+    public SolicitudeBilheteDAOImplement getSolicitudeBilheteDAO() {
+        return SolicitudeBilheteDAO;
     }
 
     public Toast getMsg() {

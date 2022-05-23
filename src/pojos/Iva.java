@@ -1,5 +1,5 @@
 package pojos;
-// Generated 29-abr-2022 10:39:04 by Hibernate Tools 4.3.1
+// Generated 22-may-2022 19:11:40 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class Iva  implements java.io.Serializable {
 
      private Integer id;
      private double porcetagem;
-     private Set<Servico> servicos = new HashSet<Servico>(0);
+     private Set<Bilhete> bilhetes = new HashSet<Bilhete>(0);
 
     public Iva() {
     }
@@ -22,9 +22,9 @@ public class Iva  implements java.io.Serializable {
     public Iva(double porcetagem) {
         this.porcetagem = porcetagem;
     }
-    public Iva(double porcetagem, Set<Servico> servicos) {
+    public Iva(double porcetagem, Set<Bilhete> bilhetes) {
        this.porcetagem = porcetagem;
-       this.servicos = servicos;
+       this.bilhetes = bilhetes;
     }
    
     public Integer getId() {
@@ -41,12 +41,12 @@ public class Iva  implements java.io.Serializable {
     public void setPorcetagem(double porcetagem) {
         this.porcetagem = porcetagem;
     }
-    public Set<Servico> getServicos() {
-        return this.servicos;
+    public Set<Bilhete> getBilhetes() {
+        return this.bilhetes;
     }
     
-    public void setServicos(Set<Servico> servicos) {
-        this.servicos = servicos;
+    public void setBilhetes(Set<Bilhete> bilhetes) {
+        this.bilhetes = bilhetes;
     }
 
 

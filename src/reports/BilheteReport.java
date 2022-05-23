@@ -6,27 +6,27 @@
 package reports;
 
 import java.util.Date;
-import pojos.Servico;
+import pojos.Bilhete;
 
 /**
  *
- * @author Adriel Alejandro
+ * @author 
  */
-public class ServicosReport {
+public class BilheteReport {
     private String nome;
     private String tipo;
     private Date data;
     private double iva;
     private double valor;
-    private double valor_final;
+    private int quantidade;
 
-    public ServicosReport(Servico p) {
+    public BilheteReport(Bilhete p) {
         this.nome = p.getNome();
-        this.tipo = p.getTipoServico().getNome();
+        this.tipo = p.getTipo().getNome();
         this.data = p.getDataCriacao();
         this.iva = p.getIva().getPorcetagem();
         this.valor = p.getValor();
-        this.valor_final = valor+iva*valor/100;
+        this.quantidade = p.getQuantidade();
     }
 
     public String getNome() {
@@ -49,9 +49,11 @@ public class ServicosReport {
         return valor;
     }
 
-    public double getValor_final() {
-        return valor_final;
+    public int getQuantidade() {
+        return quantidade;
     }
+
+   
 
     
     

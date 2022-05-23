@@ -64,7 +64,7 @@ public class ClienteDialog extends javax.swing.JDialog {
     }
     
     public String generateNum(int id) {
-        String num = "Serv-CL";
+        String num = "CL";
         String idcad = id + "";
         int cant_cero = 8 - idcad.length();
         while (cant_cero-- > 0) {
@@ -432,7 +432,7 @@ public class ClienteDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel6.setText("NIIF:");
+        jLabel6.setText("NIIF / BI:");
 
         niif.setName("nome"); // NOI18N
 

@@ -41,24 +41,24 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="servicomultiples"/>
-  <table-filter match-name="solicitude_servico"/>
-  <table-filter match-name="genero"/>
-  <table-filter match-name="acesso"/>
-  <table-filter match-name="servico"/>
-  <table-filter match-name="usuario"/>
-  <table-filter match-name="bairro"/>
-  <table-filter match-name="cargo"/>
-  <table-filter match-name="endereco"/>
-  <table-filter match-name="tipo_servico"/>
-  <table-filter match-name="pessoa"/>
-  <table-filter match-name="cliente"/>
-  <table-filter match-name="funcionario"/>
   <table-filter match-name="solicitude"/>
-  <table-filter match-name="metodo_pagamento"/>
-  <table-filter match-name="iva"/>
-  <table-filter match-name="estudo_factibilidade"/>
-  <table-filter match-name="municipio"/>
-  <table-filter match-name="estado_solicitude"/>
-  <table-filter match-name="venda"/>
   <table-filter match-name="provincia"/>
+  <table-filter match-name="genero"/>
+  <table-filter match-name="cargo"/>
+  <table-filter match-name="bairro"/>
+  <table-filter match-name="tipo"/>
+  <table-filter match-name="bilhete"/>
+  <table-filter match-name="iva"/>
+  <table-filter match-name="acesso"/>
+  <table-filter match-name="estado_solicitude"/>
+  <table-filter match-name="pessoa"/>
+  <table-filter match-name="municipio"/>
+  <table-filter match-name="endereco"/>
+  <table-filter match-name="venda"/>
+  <table-filter match-name="funcionario"/>
+  <table-filter match-name="metodo_pagamento"/>
+  <table-filter match-name="estudo_factibilidade"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="cliente"/>
+  <table-filter match-name="solicitude_bilhete"/>
 </hibernate-reverse-engineering>

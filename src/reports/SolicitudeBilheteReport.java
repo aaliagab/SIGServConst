@@ -5,26 +5,32 @@
  */
 package reports;
 
-import pojos.SolicitudeServico;
+import pojos.SolicitudeBilhete;
 
 
 /**
  *
  * @author 
  */
-public class SolicitudeServicoReport {
+public class SolicitudeBilheteReport {
     private String nome;
+    private String tipo;
     private int quantidade;
     private double valor;
 
-    public SolicitudeServicoReport(SolicitudeServico obj) {
-        this.nome = obj.getServico().getNome();
+    public SolicitudeBilheteReport(SolicitudeBilhete obj) {
+        this.nome = obj.getBilhete().getNome();
+        this.tipo = obj.getBilhete().getTipo().getNome();
         this.quantidade = obj.getQuantidade();
-        this.valor = obj.getServico().getValor();
+        this.valor = obj.getBilhete().getValor();
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public String getTipo() {
+        return tipo;
     }
 
     public int getQuantidade() {

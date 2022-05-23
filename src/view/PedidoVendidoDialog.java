@@ -31,9 +31,9 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import pojos.Solicitude;
 import pojos.EstadoSolicitude;
 import pojos.MetodoPagamento;
-import pojos.SolicitudeServico;
+import pojos.SolicitudeBilhete;
 import pojos.Venda;
-import reports.SolicitudeServicoReport;
+import reports.SolicitudeBilheteReport;
 
 /**
  *
@@ -74,18 +74,18 @@ public class PedidoVendidoDialog extends javax.swing.JDialog {
 
     public float valor(Solicitude obj) {
         float valor = 0;
-        for (SolicitudeServico solserv : obj.getSolicitudeServicos()) {
-            valor += solserv.getQuantidade() * solserv.getServico().getValor();
+        for (SolicitudeBilhete solserv : obj.getSolicitudeBilhetes()) {
+            valor += solserv.getQuantidade() * solserv.getBilhete().getValor();
         }
         return valor;
     }
 
     public void printPedido(Venda sol) {
-        List<SolicitudeServicoReport> objs = new ArrayList<>();
+        List<SolicitudeBilheteReport> objs = new ArrayList<>();
         double total = 0;
-        for (SolicitudeServico produtos_venda : sol.getSolicitude().getSolicitudeServicos()) {
-            objs.add(new SolicitudeServicoReport(produtos_venda));
-            total += produtos_venda.getQuantidade() * produtos_venda.getServico().getValor();
+        for (SolicitudeBilhete produtos_venda : sol.getSolicitude().getSolicitudeBilhetes()) {
+            objs.add(new SolicitudeBilheteReport(produtos_venda));
+            total += produtos_venda.getQuantidade() * produtos_venda.getBilhete().getValor();
         }
         try {
             JasperReport reporte = null;

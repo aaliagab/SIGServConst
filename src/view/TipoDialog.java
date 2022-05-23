@@ -7,7 +7,7 @@ package view;
 
 import controller.Toast;
 import dao.BussinessException;
-import dao.TipoServicoDAOImplement;
+import dao.TipoDAOImplement;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import pojos.TipoServico;
+import pojos.Tipo;
 
 /**
  *
  * @author
  */
-public class TipoServicoDialog extends javax.swing.JDialog {
+public class TipoDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ClienteDialog
@@ -30,14 +30,14 @@ public class TipoServicoDialog extends javax.swing.JDialog {
             busca2 = "Busca por nome";
     Main pai;
     Toast msg;
-    List<TipoServico> list_atual;
-    TipoServicoDAOImplement daoObject;
+    List<Tipo> list_atual;
+    TipoDAOImplement daoObject;
 
-    public TipoServicoDialog(java.awt.Frame parent, boolean modal) {
+    public TipoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         pai = (Main) parent;
-        daoObject = pai.control.getTipoServicoDAO();
+        daoObject = pai.control.getTipoDAO();
         this.setLocationRelativeTo(null);
         //Atualizar tabela
         updateJTable();
@@ -53,7 +53,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         nome.setText("");
     }
     
-    public void addRowTableModel(DefaultTableModel model, TipoServico obj) {
+    public void addRowTableModel(DefaultTableModel model, Tipo obj) {
         model.addRow(new Object[]{
             obj.getNome()
         });
@@ -63,9 +63,9 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setNumRows(0);
         try {
-            List<TipoServico> list = daoObject.findAll();
+            List<Tipo> list = daoObject.findAll();
             list_atual = list;
-            for (TipoServico obj : list) {
+            for (Tipo obj : list) {
                 addRowTableModel(model, obj);
             }
         } catch (BussinessException ex) {
@@ -73,15 +73,15 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         }
     }
 
-    public void updateJTableBusca(List<TipoServico> list) {
+    public void updateJTableBusca(List<Tipo> list) {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setNumRows(0);
-        for (TipoServico obj : list) {
+        for (Tipo obj : list) {
             addRowTableModel(model, obj);
         }
     }
 
-    public void editar(TipoServico obj) {
+    public void editar(Tipo obj) {
         if (!nome.getText().equals("")) {
             try {
                 obj.setNome(nome.getText());
@@ -133,7 +133,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         botao_actualizar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GERENCIAR TIPOS DE SERVIÇOS");
+        setTitle("GERENCIAR TIPOS DE BILHETE");
 
         tabela.setAutoCreateRowSorter(true);
         tabela.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -267,7 +267,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         if (nome.getText().equals("")) {
             pai.control.messageFieldEmpty();
         } else {
-            TipoServico obj = new TipoServico(nome.getText());
+            Tipo obj = new Tipo(nome.getText());
             try {
                 daoObject.save(obj);
                 updateJTable();
@@ -312,10 +312,10 @@ public class TipoServicoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_busca_nomeFocusLost
 
     private void busca_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busca_nomeKeyPressed
-        List<TipoServico> list = new ArrayList<>();
+        List<Tipo> list = new ArrayList<>();
         updateJTable();
         boolean flag = false;
-        for (TipoServico list1 : list_atual) {
+        for (Tipo list1 : list_atual) {
             if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                     && !list1.getNome().toUpperCase().contains(
                             (busca_nome.getText().substring(0, busca_nome.getText().length() - 1)).toUpperCase()
@@ -335,7 +335,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_busca_nomeKeyPressed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-        TipoServico obj = list_atual.get(tabela.getSelectedRow());
+        Tipo obj = list_atual.get(tabela.getSelectedRow());
         nome.setText(obj.getNome());
     }//GEN-LAST:event_tabelaMouseClicked
 
@@ -346,7 +346,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
             int[] rows = tabela.getSelectedRows();
             if (rows.length > 0) {
                 if (rows.length == 1) {
-                    TipoServico obj = list_atual.get(rows[0]);
+                    Tipo obj = list_atual.get(rows[0]);
                     editar(obj);                    
                 } else {
                     pai.control.messageUmaLinha();
@@ -374,14 +374,142 @@ public class TipoServicoDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TipoServicoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TipoServicoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TipoServicoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TipoServicoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -516,7 +644,7 @@ public class TipoServicoDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TipoServicoDialog dialog = new TipoServicoDialog(new javax.swing.JFrame(), true);
+                TipoDialog dialog = new TipoDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

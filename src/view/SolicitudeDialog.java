@@ -19,8 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import pojos.Cliente;
 import pojos.Funcionario;
-import pojos.Servico;
-import pojos.SolicitudeServico;
+import pojos.Bilhete;
+import pojos.SolicitudeBilhete;
 import pojos.Solicitude;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,7 +29,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import reports.SolicitudeServicoReport;
+import reports.SolicitudeBilheteReport;
 
 /**
  *
@@ -47,12 +47,12 @@ public class SolicitudeDialog extends javax.swing.JDialog {
             busca2 = "Busca por nome";
     Main pai;
     Toast msg;
-    List<Servico> list_atual;
+    List<Bilhete> list_atual;
     double preco_total = 0;
     Funcionario func;
-    List<SolicitudeServico> solicitudes_servico;
+    List<SolicitudeBilhete> solicitudes_servico;
     List<Cliente> cls;
-    Servico pscanner = null;
+    Bilhete pscanner = null;
 
     public SolicitudeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -85,11 +85,11 @@ public class SolicitudeDialog extends javax.swing.JDialog {
     }
     
     public void printPedido(){
-        List<SolicitudeServicoReport> objs = new ArrayList<>();
+        List<SolicitudeBilheteReport> objs = new ArrayList<>();
         double total = 0;
-        for (SolicitudeServico produtos_venda : solicitudes_servico) {
-            objs.add(new SolicitudeServicoReport(produtos_venda));
-            total += produtos_venda.getQuantidade() * produtos_venda.getServico().getValor();
+        for (SolicitudeBilhete produtos_venda : solicitudes_servico) {
+            objs.add(new SolicitudeBilheteReport(produtos_venda));
+            total += produtos_venda.getQuantidade() * produtos_venda.getBilhete().getValor();
         }
         try {
             JasperReport reporte = null;
@@ -118,11 +118,13 @@ public class SolicitudeDialog extends javax.swing.JDialog {
             model.removeRow(model.getRowCount() - 1);
         }
         try {
-            List<Servico> list = pai.control.getServicoDAO().findAll();
+            List<Bilhete> list = pai.control.getBilheteDAO().findAll();
             list_atual = list;
-            for (Servico obj : list) {
+            for (Bilhete obj : list) {
                 model.addRow(new Object[]{
                     obj.getNome(),
+                    obj.getTipo().getNome(),
+                    obj.getQuantidade(),
                     obj.getValor()
                 });
             }
@@ -131,7 +133,7 @@ public class SolicitudeDialog extends javax.swing.JDialog {
         }
     }
 
-    public void updateJTableBusca(List<Servico> list) {
+    public void updateJTableBusca(List<Bilhete> list) {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
 
         while (model.getRowCount() != 0) {
@@ -141,16 +143,18 @@ public class SolicitudeDialog extends javax.swing.JDialog {
             pscanner = list.get(0);
         }
 
-        for (Servico obj : list) {
+        for (Bilhete obj : list) {
             model.addRow(new Object[]{
                 obj.getNome(),
+                obj.getTipo().getNome(),
+                obj.getQuantidade(),
                 obj.getValor()
             });
         }
     }
 
     public String generateNum(int id) {
-        String num = "PED-SERV";
+        String num = "PED-BILH";
         String idcad = id + "";
         int cant_cero = 8 - idcad.length();
         while (cant_cero-- > 0) {
@@ -231,11 +235,11 @@ public class SolicitudeDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nome", "Valor"
+                "Nome", "Tipo", "Quantidade", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -262,7 +266,7 @@ public class SolicitudeDialog extends javax.swing.JDialog {
         combo.setEditable(true);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Serviço:");
+        jLabel4.setText("Bilhete:");
 
         jLabel6.setText("Quantidade:");
 
@@ -271,7 +275,7 @@ public class SolicitudeDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Serviço", "Quantidade", "Valor Unitario", "Valor Total", "ID"
+                "Bilhete", "Quantidade", "Valor Unitario", "Valor Total", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -323,8 +327,10 @@ public class SolicitudeDialog extends javax.swing.JDialog {
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
@@ -332,15 +338,13 @@ public class SolicitudeDialog extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
-                                .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(109, 109, 109)
+                                .addComponent(jLabel4))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(servico)))
-                            .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 191, Short.MAX_VALUE)))
+                                .addGap(554, 554, 554)
+                                .addComponent(servico, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 23, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(346, 346, 346)
@@ -352,24 +356,20 @@ public class SolicitudeDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(servico)))
+                .addContainerGap()
+                .addComponent(busca_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(37, 37, 37)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(servico, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inserirBtn)
                     .addComponent(apagarBtn))
@@ -394,9 +394,9 @@ public class SolicitudeDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_busca_nomeFocusLost
 
     private void busca_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busca_nomeKeyPressed
-        List<Servico> list = new ArrayList<>();
+        List<Bilhete> list = new ArrayList<>();
         boolean flag = false;
-        for (Servico list1 : list_atual) {
+        for (Bilhete list1 : list_atual) {
             if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                     && !list1.getNome().contains(busca_nome.getText().substring(0, busca_nome.getText().length() - 1))) {
                 flag = true;
@@ -413,7 +413,7 @@ public class SolicitudeDialog extends javax.swing.JDialog {
     private void inserirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) tabelaSolicitude.getModel();
         int[] rows = tabela.getSelectedRows();
-        Servico p = null;
+        Bilhete p = null;
         if (pscanner == null) {
             p = list_atual.get(rows[0]);
         } else {
@@ -438,7 +438,7 @@ public class SolicitudeDialog extends javax.swing.JDialog {
             DefaultTableModel model = (DefaultTableModel) tabelaSolicitude.getModel();
             if (filas.length != 0) {
                 for (int indice : filas) {
-                    Servico p = pai.control.getServicoDAO().get(
+                    Bilhete p = pai.control.getBilheteDAO().get(
                             Integer.parseInt(model.getValueAt(indice, 4).toString())
                     );
 
@@ -469,16 +469,19 @@ public class SolicitudeDialog extends javax.swing.JDialog {
             v.setNum(generateNum(v.getId()));
             pai.control.getSolicitudeDAO().update(v);
             for (int indice = model.getRowCount() - 1; indice >= 0; indice--) {
-                Servico p = pai.control.getServicoDAO().get(
+                Bilhete p = pai.control.getBilheteDAO().get(
                         Integer.parseInt(model.getValueAt(indice, 4).toString())
                 );
                 
-                SolicitudeServico pv = new SolicitudeServico(p, v,
+                SolicitudeBilhete pv = new SolicitudeBilhete(p, v,
                         Integer.parseInt(model.getValueAt(indice, 1).toString()));
-                pai.control.getSolicitudeServicoDAO().save(pv);
+                pai.control.getSolicitudeBilheteDAO().save(pv);
                 solicitudes_servico.add(pv);
+                p.setQuantidade(p.getQuantidade()-pv.getQuantidade());
+                pai.control.getBilheteDAO().update(p);
                 model.removeRow(indice);
             }
+            
 
             msg = new Toast("Solicitude realizada com successo", 2000);
             msg.showToast();
@@ -509,8 +512,8 @@ public class SolicitudeDialog extends javax.swing.JDialog {
             if (rows.length > 1) {
                 pai.control.messageUmaLinha();
             } else {
-                Servico p = list_atual.get(rows[0]);
-                servico.setText(p.getNome());
+                Bilhete p = list_atual.get(rows[0]);
+                servico.setText(p.getNome()+" / "+p.getTipo().getNome());
             }
         }
     }//GEN-LAST:event_tabelaMouseClicked
@@ -543,20 +546,7 @@ public class SolicitudeDialog extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
+        
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
