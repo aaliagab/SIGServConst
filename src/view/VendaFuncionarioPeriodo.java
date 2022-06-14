@@ -153,7 +153,7 @@ public class VendaFuncionarioPeriodo extends javax.swing.JDialog {
                 JasperReport reporte = null;
                 URL path = this.getClass().getResource("/reports/func_vendas_periodo_report.jasper");
                 Map<String, Object> parametros = new HashMap<>();
-                parametros.put("logo", this.getClass().getResource("/resource/logo.jpeg").toString());
+                parametros.put("logo", this.getClass().getResource("/resource/logo.png").toString());
                 parametros.put("ini", ini.getDate());
                 parametros.put("fim", fim.getDate());
                 reporte = (JasperReport) JRLoader.loadObject(path);

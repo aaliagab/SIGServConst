@@ -154,7 +154,6 @@ public class ClienteDialog extends javax.swing.JDialog {
         if (!nome.getText().equals("")
                 && !telefone.getText().equals("(+   )   -   -   ")
                 && data.getDate()!=null
-                && !email.getText().equals("")
                 && !rua.getText().equals("")) {
             String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -630,7 +629,6 @@ public class ClienteDialog extends javax.swing.JDialog {
         if (nome.getText().equals("")
                 || data.getDate()==null
                 || telefone.getText().equals("(+   )   -   -   ")
-                || email.getText().equals("")
                 || rua.getText().equals("")) {
             pai.control.messageFieldEmpty();
         } else {
